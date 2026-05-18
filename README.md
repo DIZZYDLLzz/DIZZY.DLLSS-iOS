@@ -51,7 +51,7 @@ O arquivo será salvo no formato `App_Privacy_Report_v4_YYYY-MM-DD...` no iCloud
 Abra o Scriptable, crie um novo script, cole o código abaixo e salve:
 
 ```js
-const DIZZYDLLzz = "https://raw.githubusercontent.com/DIZZYDLLzz/DIZZY.DLLSS-iOS/refs/heads/main/DIZZY.DLLSS-iOS.js"
+const DIZZYDLLzz = "https://raw.githubusercontent.com/DIZZYDLLzz/DIZZY.DLLSS-iOS/refs/heads/main/DIZZY DLLSS_iOS.js"
 
 let req = new Request(DIZZY.DLLSS_IOS)
 let code = await req.loadString()
