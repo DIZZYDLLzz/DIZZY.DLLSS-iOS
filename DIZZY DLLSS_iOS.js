@@ -1,22 +1,22 @@
 const DEVICE_LANG = (Device.language() || "pt").toLowerCase().substring(0, 2)
 const SPEECH = {
   pt: {
-    start:    "Analisando, aguarde o DIZZY.DLL terminar",
+    start:    "Analisando, aguarde o DIZZY terminar",
     half:     "Scanner em cinquenta por cento. Aguarde mais um pouco.",
     probe:    "Scanner em noventa por cento. Aguarde mais um pouco.",
-    done:     "DIZZY.DLL finalizado. Analise os resultados com cuidado.",
+    done:     "DIZZY finalizado. Analise os resultados com cuidado.",
   },
   en: {
-    start:    "Analyzing, please wait for DIZZY.DLL to finish.",
+    start:    "Analyzing, please wait for DIZZY to finish.",
     half:     "Scanner at fifty percent. Please wait a little longer.",
     probe:    "Scanner at ninety percent. Almost done.",
-    done:     "DIZZY.DLL finished. Analyze the results carefully.",
+    done:     "DIZZY finished. Analyze the results carefully.",
   },
   es: {
-    start:    "Analizando, espera que DIZZY.DLL termine.",
+    start:    "Analizando, espera que DIZZY termine.",
     half:     "Escáner al cincuenta por ciento. Espera un poco más.",
     probe:    "Escáner al noventa por ciento. Ya casi termina.",
-    done:     "DIZZY.DLL finalizado. Analiza los resultados con cuidado.",
+    done:     "DIZZY finalizado. Analiza los resultados con cuidado.",
   },
 }
 const S = SPEECH[DEVICE_LANG] || SPEECH["pt"]
