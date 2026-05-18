@@ -1,10 +1,3 @@
-// ============================================================
-// Script: DIZZY Scanner
-// ============================================================
-// NOTA: Todas as funções originais permanecem IDÊNTICAS.
-// Apenas o CSS/HTML da função buildHTML foi estilizado.
-// ============================================================
-
 const DEVICE_LANG = (Device.language() || "pt").toLowerCase().substring(0, 2)
 const SPEECH = {
   pt: {
