@@ -1592,10 +1592,10 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
 </head>
 <body>
 
-<div class="hero">
+<div class="Opa">
   <div class="hero-eyebrow">Scanner iOS</div>
-  <div class="hero-name">Keller<span>SS</span></div>
-  <div class="hero-credits">por <span class="credit-name">Keller</span> &middot; <span class="credit-name">Samir</span> &middot; <span class="credit-name">Katiau</span></div>
+  <div class="hero-name">Dizzy<span></span></div>
+  <div class="hero-credits">por <span class="credit-name">Dizzy</span> &middot; <span class="credit-name"></span> &middot; <span class="credit-name">Clear</span></div>
   <div class="lang-bar">
     <button class="lang-btn active" id="btn-pt">PT-BR</button>
     <button class="lang-btn" id="btn-en">EN</button>
@@ -1715,7 +1715,7 @@ function buildLangScript() {
   return `<script>
 var TRANSLATIONS = {
   pt: {
-    eyebrow: "Scanner iOS",
+    eyebrow: "Scanner IOS",
     credits: "por Keller · Samir · Katiau",
     fileLabel: "Arquivo:",
     start: "Início",
@@ -1792,8 +1792,8 @@ var TRANSLATIONS = {
     reasonOrg: function(kw){ return "Org/ISP associado a hospedagem/cheat proxy: " + kw; },
   },
   en: {
-    eyebrow: "iOS Scanner",
-    credits: "by Keller · Samir · Katiau",
+    eyebrow: "Scanner IOS",
+    credits: "Dizzy · Clear.dll",
     fileLabel: "File:",
     start: "Start",
     lastRecord: "Last record",
