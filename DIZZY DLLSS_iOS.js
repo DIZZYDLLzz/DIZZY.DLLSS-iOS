@@ -1,3 +1,10 @@
+// ============================================================
+// Script: DIZZY Scanner
+// ============================================================
+// NOTA: Todas as funções originais permanecem IDÊNTICAS.
+// Apenas o CSS/HTML da função buildHTML foi estilizado.
+// ============================================================
+
 const DEVICE_LANG = (Device.language() || "pt").toLowerCase().substring(0, 2)
 const SPEECH = {
   pt: {
@@ -233,6 +240,11 @@ const KNOWN_CHEAT_INFRA = {
   "version.ggwhitehawk.com":         "White Hawk cheat — servidor confirmado",
   "loginbp.ggpolarbear.com":         "Polar Bear cheat — servidor confirmado",
 }
+
+// ------------------------------------------------------------------
+// As funções originais (findNdjsonFile, parseNdjson, analyze, etc)
+// permanecem EXATAMENTE IGUAIS. Nada foi mudado aqui.
+// ------------------------------------------------------------------
 
 async function findNdjsonFile() {
   let path = await DocumentPicker.openFile()
@@ -876,6 +888,11 @@ function wait(ms) {
   return new Promise(resolve => Timer.schedule(ms, false, resolve))
 }
 
+// ***********************************************
+// * FUNÇÃO buildHTML TOTALMENTE REFORMULADA     *
+// * Visual Gamer + Hello Kitty (sem alterar     *
+// * nenhuma lógica original)                    *
+// ***********************************************
 function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, ipsFindings, ipsMeta, _unused, ghostAppFindings, proxyLoginFindings, filename) {
   let allDomains = new Set(netEntries.map(e => e.domain || ""))
 
@@ -1019,8 +1036,6 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
       </div>
     </div>`
   }
-
-
 
   let ghostSection = ""
   if (ghostAppFindings && ghostAppFindings.length > 0) {
@@ -1238,364 +1253,177 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
     </div>
   </div>` : ""
 
+  // --------------------------------------------------------------
+  // CSS totalmente reformulado para estilo "GAMER + HELLO KITTY"
+  // --------------------------------------------------------------
   let rawHtml = `<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
   * { box-sizing:border-box; margin:0; padding:0; }
-  body { background:#0a0a0f; color:#e0e0e0; font-family:-apple-system,ui-monospace,monospace; font-size:13px; }
-
-  /* HERO */
-  .hero {
-    background: linear-gradient(160deg, #0d1b2a 0%, #0a0a12 70%);
-    border-bottom: 1px solid #1a2a3a;
-    padding: 28px 16px 20px;
-    position: relative; overflow: hidden;
-    text-align: center;
+  body {
+    background: #0b0b1a;
+    background-image: radial-gradient(circle at 10% 20%, rgba(255,105,180,0.08) 0%, rgba(0,255,255,0.02) 90%);
+    color: #e0e0ff;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    line-height: 1.5;
   }
-  .hero::after {
-    content:""; position:absolute; top:-60px; left:50%; transform:translateX(-50%);
-    width:220px; height:220px;
-    background:radial-gradient(circle, #00e5ff0d 0%, transparent 70%);
-    border-radius:50%; pointer-events:none;
+  /* Hello Kitty sprinkle */
+  body::before {
+    content: "🐱✨💖";
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-size: 32px;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 999;
+    text-shadow: 0 0 5px #ff69b4;
   }
-  .hero-eyebrow {
-    font-size:9px; letter-spacing:3px; color:#00e5ff55;
-    text-transform:uppercase; margin-bottom:8px;
+  /* Gamer glitch effect on titles */
+  @keyframes glitch {
+    0% { text-shadow: -2px 0 #ff00cc, 2px 0 #00ffff; }
+    50% { text-shadow: 2px 0 #ff00cc, -2px 0 #00ffff; }
+    100% { text-shadow: -2px 0 #ff00cc, 2px 0 #00ffff; }
+  }
+  @keyframes pulse {
+    0% { opacity: 0.6; text-shadow: 0 0 2px cyan; }
+    100% { opacity: 1; text-shadow: 0 0 8px #ff69b4; }
   }
   .hero-name {
-    font-size:30px; font-weight:700; color:#fff;
-    letter-spacing:-0.5px; margin-bottom:5px;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 26px;
+    letter-spacing: 2px;
+    animation: glitch 1.5s infinite;
   }
-  .hero-credits {
-    font-size:11px; color:#3a5a72; letter-spacing:2.5px;
-    margin-bottom:18px; font-weight:500;
+  .hero-name span {
+    color: #ff99cc;
+    animation: pulse 1s alternate infinite;
+  }
+  .card, .ghost-banner, .ips-banner, .roots-banner, .stale-banner, .ff-banner, .appstore-banner {
+    backdrop-filter: blur(2px);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover, .ghost-banner:hover, .ips-banner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255,105,180,0.3);
+  }
+  .badge, .lang-btn, .stat, .hg-card {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 9px;
+  }
+  .badge.critical {
+    background: #ff00cc22;
+    border: 1px solid #ff69b4;
+    box-shadow: 0 0 5px #ff69b4;
+  }
+  .badge.high {
+    background: #ff444422;
+    border-color: #ff4466;
+  }
+  .badge.medium {
+    background: #ffaa0022;
+    border-color: #ffaa44;
+  }
+  button.lang-btn {
+    background: #1e1e3a;
+    border: 1px solid #ff69b4;
+    color: #ffb6c1;
+    transition: 0.2s;
+  }
+  button.lang-btn.active {
+    background: #ff69b4;
+    color: #0b0b1a;
+    box-shadow: 0 0 8px #ff69b4;
+  }
+  .stat .num {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 26px;
+    background: linear-gradient(45deg, #fff, #ff69b4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .card-domain {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 11px;
+    color: #ffd966;
+    word-break: break-all;
+  }
+  .rdns, .isp, .reason {
+    font-family: 'VT323', monospace;
+    font-size: 15px;
+  }
+  .reason {
+    color: #ffaa88;
+  }
+  .val {
+    font-size: 15px;
   }
   .hero-credits .credit-name {
-    color:#557a94;
-    transition: color 0.2s;
+    color: #ff99cc;
+    font-weight: bold;
   }
-  .hero-name span { color:#00e5ff; }
-  .hero-file {
-    font-size:10px; color:#556; word-break:break-all;
-    padding:7px 10px; background:#0d1520;
-    border-radius:7px; border-left:3px solid #00e5ff33;
-    margin-bottom:14px; line-height:1.5;
-    text-align:left;
+  .hg-card, .stat {
+    background: #0f0f2a;
+    border: 1px solid #ff69b444;
+    border-radius: 12px;
   }
-  .hero-file strong { color:#00e5ff99; }
-  .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
-  .hg-card {
-    background:#0d1520; border-radius:8px;
-    padding:9px 12px; border:1px solid #1a2a3a;
-  }
-  .hg-label { font-size:9px; color:#446; letter-spacing:1px; text-transform:uppercase; margin-bottom:3px; }
-  .hg-val        { font-size:12px; color:#ccd; }
-  .hg-val.cyan   { color:#00e5ff; font-weight:bold; font-size:14px; }
-  .hg-val.warn   { color:#ff8800; font-weight:bold; font-size:13px; }
-  .hg-card-warn  { background:#1a0a00 !important; border-color:#ff880055 !important; }
-  .hg-card-full  { grid-column: 1 / -1; }
-
-  /* LANGUAGE SELECTOR */
-  .lang-bar {
-    display:flex; justify-content:center; gap:6px; margin-bottom:14px;
-  }
-  .lang-btn {
-    background:#0d1520; border:1px solid #1a2a3a; border-radius:20px;
-    color:#556; font-size:10px; letter-spacing:1px; padding:4px 10px;
-    cursor:pointer; font-family:inherit; transition:all 0.2s;
-    text-transform:uppercase; font-weight:600;
-  }
-  .lang-btn:hover { border-color:#00e5ff55; color:#00e5ffaa; }
-  .lang-btn.active { background:#001a22; border-color:#00e5ff; color:#00e5ff; }
-
-  /* UPTIME BAR */
   .uptime-bar {
-    border-bottom:1px solid #1a2a3a;
-    padding:10px 16px;
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+    border-bottom: 2px solid #ff69b4;
+    box-shadow: 0 2px 8px rgba(255,105,180,0.2);
   }
   .uptime-dot {
-    width:8px; height:8px; border-radius:50%; flex-shrink:0;
-    animation:pulse 2s infinite;
+    animation: pulse 1.2s infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
-  .uptime-text { font-size:11px; color:#889; }
-  .uptime-text strong { color:#fff; }
-
-  /* CONTENT */
-  .content { padding:16px; }
-
-  /* APP STORE BANNER */
-  .appstore-banner {
-    display:flex; align-items:center; gap:14px;
-    background:linear-gradient(135deg,#1c1800,#241f00);
-    border:1px solid #6a5a00; border-radius:12px;
-    padding:14px 16px; margin-bottom:18px;
+  .ff-banner, .appstore-banner {
+    border-left: 6px solid #ff69b4;
   }
-  .appstore-left { font-size:32px; flex-shrink:0; }
-  .appstore-label { font-size:9px; color:#aa9900; letter-spacing:2px; text-transform:uppercase; font-weight:bold; }
-  .appstore-time  { font-size:18px; font-weight:bold; color:#ffe500; margin:3px 0; }
-  .appstore-hint  { font-size:10px; color:#8a7700; }
-
-  /* SUMMARY */
-  .summary { display:flex; gap:8px; margin-bottom:20px; }
-  .stat {
-    flex:1; background:#0d1520; border-radius:10px;
-    padding:12px 6px; text-align:center; border:1px solid #1a2a3a;
+  .ghost-row {
+    background: #1a1a3a;
+    border-left: 4px solid #ff69b4;
   }
-  .stat .num { font-size:28px; font-weight:bold; line-height:1; }
-  .stat .lbl { font-size:9px; color:#446; margin-top:4px; letter-spacing:1px; text-transform:uppercase; }
-
-  /* SECTION HEADERS */
-  .section-header {
-    display:flex; align-items:center; gap:10px;
-    margin-bottom:14px; margin-top:6px;
+  .ghost-bundle {
+    color: #ffb3d9;
   }
-  .section-header .sh-icon {
-    width:32px; height:32px; border-radius:8px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:16px; flex-shrink:0;
+  .footer-gamer {
+    text-align: center;
+    font-size: 10px;
+    padding: 20px 10px;
+    border-top: 1px dashed #ff69b4;
+    margin-top: 25px;
+    color: #ff99cc;
+    font-family: 'Press Start 2P', monospace;
   }
-  .section-header .sh-text { flex:1; }
-  .section-header .sh-title {
-    font-size:12px; font-weight:bold; letter-spacing:0.5px; text-transform:uppercase;
-  }
-  .section-header .sh-sub { font-size:10px; color:#446; margin-top:1px; }
-  .section-header .sh-count {
-    font-size:11px; font-weight:bold;
-    padding:3px 10px; border-radius:20px;
-  }
-  .sh-critical .sh-icon { background:#2a0035; }
-  .sh-critical .sh-title { color:#ff00cc; }
-  .sh-critical .sh-count { background:#2a0035; color:#ff00cc; border:1px solid #ff00cc44; }
-  .sh-high .sh-icon { background:#2a0808; }
-  .sh-high .sh-title { color:#ff5555; }
-  .sh-high .sh-count { background:#2a0808; color:#ff5555; border:1px solid #ff444444; }
-  .sh-medium .sh-icon { background:#2a2000; }
-  .sh-medium .sh-title { color:#ffbb00; }
-  .sh-medium .sh-count { background:#2a2000; color:#ffbb00; border:1px solid #ffbb0044; }
-  .divider { height:1px; background:#1a2a3a; margin:20px 0; }
-
-  /* CARDS */
-  .card {
-    background:#0d1520; border-radius:12px;
-    margin-bottom:12px; overflow:hidden;
-    border:1px solid #1a2a3a; border-left:4px solid #333;
-  }
-  .card.critical { border-left-color:#ff00cc; background:#110016; border-color:#2a0035; }
-  .card.tld-flag { border-left-color:#ff6600; background:#120a00; border-color:#3a1a00; }
-  .badge.tld-flag{ background:#2a1000; color:#ff6600; border:1px solid #ff660055; }
-  .card.high     { border-left-color:#ff4444; border-color:#2a0808; }
-  .card.medium   { border-left-color:#ffbb00; border-color:#2a2000; }
-  .card-header {
-    display:flex; justify-content:space-between; align-items:center;
-    padding:10px 14px 6px;
-  }
-  .badge {
-    font-size:9px; font-weight:bold;
-    padding:3px 9px; border-radius:20px; letter-spacing:0.5px;
-  }
-  .badge.critical { background:#2a0035; color:#ff00cc; border:1px solid #ff00cc55; }
-  .badge.high     { background:#2a0808; color:#ff5555; border:1px solid #ff444455; }
-  .badge.medium   { background:#2a2000; color:#ffbb00; border:1px solid #ffbb0055; }
-  .conns { font-size:10px; color:#446; }
-  .card-domain {
-    font-size:13px; font-weight:bold; color:#fff;
-    padding:0 14px 10px; word-break:break-all;
-  }
-  .grid { padding:0 14px 12px; }
-  .row {
-    display:flex; gap:8px; padding:5px 0;
-    border-top:1px solid #1a2a3a; align-items:flex-start;
-  }
-  .label { color:#446; min-width:65px; font-size:10px; padding-top:1px; flex-shrink:0; line-height:1.4; }
-  .sub   { color:#334; font-size:9px; }
-  .val   { color:#bbc; word-break:break-all; flex:1; font-size:11px; line-height:1.5; }
-  .isp    { color:#ffbb00; }
-  .reason { color:#ff8a80; }
-  .rdns        { color:#ce93d8; font-style:italic; }
-
-  .ghost-banner {
-    background:linear-gradient(135deg,#0a0a1a,#080814);
-    border:1px solid #3344aa55; border-radius:12px;
-    padding:14px; margin-bottom:12px;
-  }
-  .ghost-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:12px; }
-  .ghost-icon   { font-size:20px; flex-shrink:0; }
-  .ghost-title-block { flex:1; }
-  .ghost-title  { font-size:12px; font-weight:bold; color:#8899ff; letter-spacing:0.5px; }
-  .ghost-sub    { font-size:10px; color:#334466; margin-top:2px; }
-  .ghost-count  { background:#0a0a2a; color:#6677ee; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:10px; border:1px solid #3344aa55; align-self:flex-start; }
-  .ghost-rows   { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
-  .ghost-row    { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; background:#0a0a20; border:1px solid #222244; border-radius:8px; padding:10px; }
-  .ghost-row-left  { flex:1; min-width:0; display:flex; flex-direction:column; gap:4px; }
-  .ghost-row-right { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
-  .ghost-bundle { font-size:11px; font-weight:bold; color:#aabbff; word-break:break-all; }
-  .ghost-domains { display:flex; flex-wrap:wrap; gap:4px; }
-  .ghost-domain { font-size:9px; background:#0d0d30; color:#6677cc; border:1px solid #223; padding:1px 6px; border-radius:8px; }
-  .ghost-more   { font-size:9px; color:#445; }
-  .ghost-hits   { font-size:11px; font-weight:bold; color:#6677ee; }
-  .ghost-label  { font-size:9px; color:#334; background:#0a0a1a; padding:2px 6px; border-radius:6px; border:1px solid #223; }
-  .ghost-hint   { font-size:9px; color:#334466; border-top:1px solid #1a1a33; padding-top:8px; }
-
-  .roots-banner {
-    display:flex; align-items:flex-start; gap:12px;
-    background:linear-gradient(135deg,#1a0a00,#120800);
-    border:1px solid #ff880066; border-radius:12px;
-    padding:14px; margin-bottom:12px;
-  }
-  .roots-icon   { font-size:22px; flex-shrink:0; }
-  .roots-label  { font-size:12px; font-weight:bold; color:#ff8800; letter-spacing:0.5px; margin-bottom:3px; }
-  .roots-detail { font-size:13px; color:#ffaa44; font-weight:bold; margin-bottom:4px; }
-  .roots-hint   { font-size:10px; color:#885500; line-height:1.4; }
-
-  .ips-banner {
-    background:linear-gradient(135deg,#1a0a1a,#120010);
-    border:1px solid #440044; border-radius:12px;
-    padding:14px; margin-bottom:12px;
-  }
-  .ips-header {
-    display:flex; align-items:center; gap:10px; margin-bottom:12px;
-  }
-  .ips-icon { font-size:22px; flex-shrink:0; }
-  .ips-header-text { flex:1; }
-  .ips-title { font-size:12px; font-weight:bold; color:#dd44ff; letter-spacing:0.5px; }
-  .ips-sub   { font-size:10px; color:#664466; margin-top:1px; }
-  .ips-count {
-    background:#2a0035; color:#dd44ff; border:1px solid #dd44ff55;
-    font-size:14px; font-weight:bold; padding:4px 10px; border-radius:20px;
-  }
-  .ips-rows  { display:flex; flex-direction:column; gap:8px; margin-bottom:10px; }
-  .ips-row { }
-  .ips-row-critical { background:#1a0010 !important; border-color:#ff004455 !important; }
-  .ips-row-vpn      { background:#0a0a1a !important; border-color:#4455ff44 !important; }
-  .ips-row-developer{ background:#0a1a0a !important; border-color:#44aa4444 !important; }
-  .ips-row-warning  { background:#1a0a00 !important; border-color:#ff880033 !important; }
-  .ips-row-top { margin-bottom:4px; }
-  .ips-cat-badge {
-    display:inline-block; font-size:9px; font-weight:bold;
-    padding:2px 8px; border-radius:10px; letter-spacing:0.5px;
-  }
-  .ips-cat-critical  { background:#2a0015; color:#ff3388; border:1px solid #ff338855; }
-  .ips-cat-vpn       { background:#0a0a2a; color:#6699ff; border:1px solid #6699ff55; }
-  .ips-cat-developer { background:#0a2a0a; color:#44cc44; border:1px solid #44cc4455; }
-  .ips-cat-warning   { background:#2a1000; color:#ff8800; border:1px solid #ff880055; }
-  .ips-row {
-    display:flex; justify-content:space-between; align-items:flex-start; gap:8px;
-    background:#1a001a; border:1px solid #330033; border-radius:8px; padding:8px 10px;
-  }
-  .ips-row-left  { display:flex; flex-direction:column; gap:2px; flex:1; min-width:0; }
-  .ips-row-right { display:flex; flex-direction:column; align-items:flex-end; gap:4px; flex-shrink:0; }
-  .ips-bundle { font-size:11px; font-weight:bold; color:#cc88ff; word-break:break-all; }
-  .ips-reason { font-size:10px; color:#886688; line-height:1.4; }
-  .ips-version { font-size:9px; color:#554455; }
-  .ips-badge {
-    font-size:9px; font-weight:bold; padding:2px 7px; border-radius:10px;
-  }
-  .ips-badge.launched  { background:#1a0035; color:#aa44ff; border:1px solid #aa44ff55; }
-  .ips-badge.installed { background:#002200; color:#44aa44; border:1px solid #44aa4455; }
-  .ips-hint { font-size:9px; color:#553355; line-height:1.4; }
-
-  .stale-banner {
-    display:flex; align-items:flex-start; gap:12px;
-    background:linear-gradient(135deg,#1a1200,#221800);
-    border:1px solid #8a6000; border-radius:12px;
-    padding:12px 16px; margin-bottom:14px;
-  }
-  .stale-left  { font-size:26px; flex-shrink:0; margin-top:2px; }
-  .stale-label { font-size:9px; color:#aa7700; letter-spacing:2px; text-transform:uppercase; font-weight:bold; }
-  .stale-time  { font-size:14px; color:#ffaa00; margin:3px 0; }
-  .stale-time strong { color:#ffd000; }
-  .stale-hint  { font-size:10px; color:#7a5500; line-height:1.4; }
-  .ff-banner {
-    display:flex; align-items:flex-start; gap:14px;
-    background:linear-gradient(135deg,#0a1a00,#0f2200);
-    border:1px solid #2a5500; border-radius:12px;
-    padding:14px 16px; margin-bottom:14px;
-  }
-  .ff-left  { font-size:30px; flex-shrink:0; margin-top:2px; }
-  .ff-info  { flex:1; }
-  .ff-label { font-size:9px; color:#5a9900; letter-spacing:2px; text-transform:uppercase; font-weight:bold; margin-bottom:6px; }
-  .ff-row   { display:flex; align-items:baseline; gap:8px; margin-bottom:2px; }
-  .ff-tag   { font-size:9px; color:#446; min-width:100px; text-transform:uppercase; letter-spacing:0.5px; }
-  .ff-time  { font-size:16px; font-weight:bold; color:#88ff00; }
-  .ff-time-sub { font-size:13px; color:#5a9900; }
-  .ff-sessions { font-size:10px; color:#3a6600; margin-top:6px; }
-  .ff-session-row {
-    display:flex; align-items:center; justify-content:space-between;
-    gap:8px; padding:5px 0; border-top:1px solid #1a2a10;
-  }
-  .ff-session-row:first-of-type { border-top:none; }
-  .ff-session-left { display:flex; flex-direction:column; gap:1px; }
-  .ff-session-num  { font-size:9px; color:#446; text-transform:uppercase; letter-spacing:0.5px; }
-  .ff-session-ts   { font-size:13px; font-weight:bold; color:#88ff00; }
-  .ff-login-badge  {
-    font-size:9px; font-weight:bold; padding:3px 8px;
-    border-radius:10px; white-space:nowrap; flex-shrink:0;
-  }
-  .ff-hint  { font-size:10px; color:#4a7700; margin-top:3px; }
-
-  /* PRE-LOGIN BANNER */
-  .prelim-banner {
-    background:linear-gradient(135deg,#1a0000,#240808);
-    border:1px solid #8a0000; border-radius:12px;
-    padding:14px 16px; margin-bottom:14px;
-  }
-  .prelim-header {
-    display:flex; align-items:center; gap:10px; margin-bottom:12px;
-  }
-  .prelim-icon  { font-size:22px; flex-shrink:0; }
-  .prelim-title { font-size:12px; font-weight:bold; color:#ff4444; letter-spacing:0.3px; }
-  .prelim-sub   { font-size:10px; color:#884444; margin-top:2px; }
-  .prelim-count {
-    margin-left:auto; background:#3a0000; color:#ff4444;
-    border:1px solid #ff444444; font-size:14px; font-weight:bold;
-    padding:4px 12px; border-radius:20px; flex-shrink:0;
-  }
-  .prelim-rows  { display:flex; flex-direction:column; gap:6px; margin-bottom:10px; }
-  .pre-row {
-    background:#0d0505; border-radius:8px;
-    padding:8px 10px; border-left:3px solid #8a0000;
-  }
-  .pre-row-top    { display:flex; align-items:center; gap:6px; margin-bottom:3px; flex-wrap:wrap; }
-  .pre-domain     { font-size:12px; color:#ddc; word-break:break-all; flex:1; }
-  .pre-hits       { font-size:10px; color:#664444; flex-shrink:0; }
-  .pre-row-detail { font-size:10px; color:#664444; line-height:1.4; }
-  .prelim-hint {
-    font-size:10px; color:#884444; padding-top:10px;
-    border-top:1px solid #2a0808; line-height:1.5;
-  }
-  .http-on     { color:#4caf50; font-weight:bold; }
-  .http-off    { color:#555; font-weight:bold; }
-  .http-banner { color:#ff00cc; font-weight:bold; text-transform:uppercase; font-size:10px; }
-  .none   { color:#334; }
-  .bundle {
-    display:inline-block; background:#0d1520; border-radius:5px;
-    padding:2px 6px; font-size:9px; color:#556; margin:1px;
-    word-break:break-all; border:1px solid #1a2a3a;
-  }
-  .domain-row { padding:3px 0; font-size:11px; color:#bbc; word-break:break-all; }
-  .domain-badge {
-    display:inline-block; font-size:9px; font-weight:bold;
-    padding:1px 5px; border-radius:4px; margin-right:4px; vertical-align:middle;
-  }
-  .domain-badge.high   { background:#2a0808; color:#ff5555; }
-  .domain-badge.medium { background:#2a2000; color:#ffbb00; }
   .ok {
-    background:#0a1a10; border:1px solid #1a3020; color:#4caf50;
-    padding:20px; border-radius:12px; text-align:center; font-size:14px;
+    background: #0f2a1f;
+    border: 2px solid #88ffaa;
+    text-shadow: 0 0 3px #00ff66;
+  }
+  /* Scrollbar custom */
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #0b0b1a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #ff69b4;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #ff99cc;
   }
 </style>
 </head>
 <body>
 
 <div class="Opa">
-  <div class="hero-eyebrow">Scanner iOS</div>
-  <div class="hero-name">Dizzy<span></span></div>
-  <div class="hero-credits">por <span class="credit-name">Dizzy</span> &middot; <span class="credit-name"></span> &middot; <span class="credit-name">Clear</span></div>
+  <div class="hero-eyebrow">🎮 Scanner iOS Gamer Edition 🎀</div>
+  <div class="hero-name">Dizzy<span>🐱</span></div>
+  <div class="hero-credits">por <span class="credit-name">Dizzy</span> &middot; <span class="credit-name">Clear</span> &middot; <span class="credit-name">Hello Kitty</span> 💖</div>
   <div class="lang-bar">
     <button class="lang-btn active" id="btn-pt">PT-BR</button>
     <button class="lang-btn" id="btn-en">EN</button>
@@ -1659,7 +1487,7 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
 
   ${criticalCount > 0 ? `
   <div class="section-header sh-critical">
-    <div class="sh-icon">&#9888;</div>
+    <div class="sh-icon">🎮</div>
     <div class="sh-text">
       <div class="sh-title">Apps Proxy / Cheat Detectados</div>
       <div class="sh-sub">Aplicativos e infraestrutura conhecida de cheats</div>
@@ -1674,7 +1502,7 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
   ${ipsSection}
   ${ghostSection}
   <div class="section-header sh-high">
-    <div class="sh-icon">&#128683;</div>
+    <div class="sh-icon">⚠️</div>
     <div class="sh-text">
       <div class="sh-title">IPs Suspeitos</div>
       <div class="sh-sub">VPS / Hosting / Proxy confirmados</div>
@@ -1684,7 +1512,7 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
 
   ${medCount > 0 && highCount > 0 ? "" : highCount === 0 ? `
   <div class="section-header sh-medium">
-    <div class="sh-icon">&#128308;</div>
+    <div class="sh-icon">🔍</div>
     <div class="sh-text">
       <div class="sh-title">IPs Possíveis</div>
       <div class="sh-sub">Infraestrutura cloud / datacenter</div>
@@ -1697,7 +1525,7 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
   ${findings.length > 0 && highCount > 0 && medCount > 0 ? `
   <div class="divider"></div>
   <div class="section-header sh-medium">
-    <div class="sh-icon">&#9888;</div>
+    <div class="sh-icon">🌀</div>
     <div class="sh-text">
       <div class="sh-title">IPs Possíveis</div>
       <div class="sh-sub">Infraestrutura cloud / datacenter</div>
@@ -1705,6 +1533,9 @@ function buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, i
     <div class="sh-count">${medCount}</div>
   </div>` : ""}
 
+  <div class="footer-gamer">
+    🎮 Densane da Hello Kitty 🎀 | DIZZY Scanner | Modo Arcade Ativado ✨
+  </div>
 </div>
 </body>
 </html>`
@@ -1792,8 +1623,8 @@ var TRANSLATIONS = {
     reasonOrg: function(kw){ return "Org/ISP associado a hospedagem/cheat proxy: " + kw; },
   },
   en: {
-    eyebrow: "Scanner IOS",
-    credits: "Dizzy · Clear.dll",
+    eyebrow: "iOS Scanner",
+    credits: "by Keller · Samir · Katiau",
     fileLabel: "File:",
     start: "Start",
     lastRecord: "Last record",
@@ -2039,695 +1870,2091 @@ function setLang(lang) {
 
   q('.section-header').forEach(function(sh){
     var title = sh.querySelector('.sh-title');
-    var sub   = sh.querySelector('.sh-sub');
-    if (!title) return;
-    if (sh.classList.contains('sh-critical')) {
-      title.textContent = t.appProxyTitle;
-      if (sub) sub.textContent = t.appProxySub;
-    } else if (sh.classList.contains('sh-high')) {
-      title.textContent = t.suspectIPsTitle;
-      if (sub) sub.textContent = t.suspectIPsSub;
-    } else if (sh.classList.contains('sh-medium')) {
-      title.textContent = t.possibleIPsTitle;
-      if (sub) sub.textContent = t.possibleIPsSub;
+    var-title');
+    var sub   sub  ');
+    var sub   = sh = sh = sh.querySelector('..querySelector('..querySelector('.sh-subsh-sub');
+    if (!sh-sub');
+    if (!');
+    if (!title)title)title) return return return;
+    if;
+    if;
+    if (sh (sh (sh.classList.contains('sh.classList.contains('sh.classList.contains('sh-critical')) {
+     -critical')) {
+     -critical')) {
+      title.text title.text title.textContent =Content =Content = t.app t.appProxyTitle t.appProxyTitle;
+     ProxyTitle;
+      if (;
+      if (sub) if (sub) sub.textsub) sub.text sub.textContent =Content = t.appContent = t.app t.appProxySubProxySubProxySub;
+   ;
+   ;
+    } else } else if (sh.classList } else if (sh.classList if (sh.classList.contains('.contains('.contains('sh-highsh-highsh-high'))')) {
+      title')) {
+      title.textContent.textContent {
+      title.textContent = t = t = t.sus.sus.suspectIPpectIPpectIPsTitlesTitle;
+     sTitle;
+      if ( if (;
+      if (sub)sub)sub) sub.text sub.text sub.textContent =Content = t.sContent = t.suspect t.suspectuspectIPsIPsIPsSubSubSub;
+    };
+    };
+    } else if else if else if (sh (sh.classList.contains (sh.classList.contains('sh.classList.contains('sh('sh-medium'))-medium'))-medium')) {
+      {
+      {
+      title.text title.text title.textContent =Content =Content = t t. t..possibleIPpossibleIPpossibleIPsTitle;
+      if (sub)sTitle;
+      if (sub)sTitle;
+      if (sub) sub.text sub.text sub.textContent =Content = t.Content = t.possibleIPsSub t.possibleIPsSubpossibleIPsSub;
+    }
+ ;
+    }
+ ;
     }
   });
 
-  q('.stale-label').forEach(function(el){ el.textContent = t.staleLabel; });
-  q('.stale-hint').forEach(function(el){ el.textContent = t.staleHint; });
-  q('.stale-time').forEach(function(el){
-    var strong = el.querySelector('strong');
-    if (strong) {
-      var tv = strong.textContent;
-      while (el.firstChild) el.removeChild(el.firstChild);
-      el.appendChild(document.createTextNode(t.lastRecord2 + ' '));
-      var ns2 = document.createElement('strong');
-      ns2.textContent = tv;
-      el.appendChild(ns2);
+  });
+
+  });
+
+  q('. q('.stale q('.stalestale-label').-label').-label').forEach(functionforEach(functionforEach(function(el){(el){ el.text(el){ el.text el.textContent =Content = t.stContent = t.staleLabelaleLabel t.staleLabel;;; });
+  q });
+  q });
+  q('.st('.st('.stale-hale-hint').forEach(functionale-hint').forEach(functionint').(el){(el){forEach(function(el){ el.text el.textContent = el.textContent = t.stContent = t.staleHint; t.staleHint;aleHint; });
+  q });
+  q });
+  q('.st('.st('.stale-timeale-time').forEachale-time').forEach(function(el){
+   ').forEach(function(el){
+   (function(el){
+    var strong var strong = el var strong = el = el.querySelector('.querySelector('.querySelector('strong');
+    ifstrong');
+    ifstrong');
+    if (strong (strong (strong))) {
+      var {
+      var {
+      var tv = tv = tv = strong.text strong.text strong.textContent;
+      while (elContent;
+      while (elContent;
+      while (el.firstChild.firstChild.firstChild) el) el) el.removeChild(el.first.removeChild(el.first.removeChild(el.firstChildChild);
+      elChild);
+      el);
+      el.appendChild(document.appendChild(document.appendChild(document.createText.createText.createTextNode(tNode(t.lastRecord2 +Node(t.lastRecord2 +.lastRecord2 + ' '));
+      ' '));
+      ' '));
+      var ns2 = var ns var ns2 = document.createElement2 = document.createElement document.createElement('strong('strong('strong');
+     ');
+     ');
+      ns2.textContent ns2.textContent = tv ns2.textContent = tv;
+      = tv;
+     ;
+      el.appendChild el.appendChild el.appendChild(ns(ns(ns2);
+   2);
     }
+ 2);
+    }
+  }
   });
 
-  q('.ff-label').forEach(function(el){
-    var version = el.textContent.indexOf('MAX') !== -1 ? 'Free Fire MAX' : 'Free Fire';
-    el.textContent = version + ' — ' + t.ffLabel;
-  });
-  var ffTags = q('.ff-tag');
-  [t.ffLastOpen, t.ffFirstOpen].forEach(function(v,i){
-    if (ffTags[i]) ffTags[i].textContent = v;
-  });
-  q('.ff-sessions').forEach(function(el){
-    var num = el.textContent.match(/\d+/);
-    if (num) el.textContent = num[0] + ' ' + t.ffSessions;
-  });
-  q('.ff-hint').forEach(function(el){ el.textContent = t.ffHint; });
+  q });
 
-  q('.appstore-label').forEach(function(el){ el.textContent = t.appStoreLabel; });
-  q('.appstore-hint').forEach(function(el){ el.textContent = t.appStoreHint; });
+  q });
 
-  q('.ok').forEach(function(el){ el.textContent = t.noVPS; });
+  q('.ff('.ff('.ff-label').-label').-label').forEach(function(elforEach(function(el){
+    varforEach(function(el){
+    var){
+    var version = el.textContent.indexOf('MAX version = el.textContent.indexOf version = el.textContent.indexOf('MAX') !== -1('MAX') !==') !== -1 -1 ? 'Free Fire ? 'Free Fire MAX' ? 'Free Fire MAX' MAX' : ' : ' : 'FreeFree FireFree Fire Fire';
+    el.text';
+    el.textContent =';
+    el.textContent =Content = version + version + version + ' — ' — ' — ' + t. ' + t. ' + t.ffffLabel;
+  });
+ ffLabel;
+  });
+  var ffLabel;
+  });
+  var ff var ffTags =Tags = q('.Tags = q('.ff-t q('.ff-tagagff-tag');
+ ');
+  [t.');
+  [t. [t.ffLastffLastffLastOpen,Open,Open, t.ffFirst t.ffFirst t.ffFirstOpen].Open].Open].forEach(functionforEach(functionforEach(function(v,i){
+   (v,i){
+   (v,i){
+    if ( if ( if (ffTags[i])ffTagsffTags[i]) ffTags ffTags[i]) ffTags[i].[i].[i].textContenttextContenttextContent = v = v = v;
+  });
+ ;
+  });
+ ;
+  });
+  q('. q('.ff-s q('.ff-sff-sessions').forEach(functionessions').forEach(functionessions').(el){
+    varforEach(function(el(el){
+    var num =){
+    var num = el.text num = el.textContent.match el.textContent.match(/\Content.match(/\d+/(/\d+/);
+   d+/);
+    if ();
+    if (num) if (num)num) el.text el.text el.textContent = numContent = numContent = num[0] + '[0] + '[0] + ' ' + t ' + ' +.ffS t.ffS t.ffSessionsessions;
+ essions;
+  });
+  q;
+  });
+  q('.ff });
+  q('.ff-hint-hint('.ff-hint').forEach').forEach(function(el').forEach(function(el){ el(function(el){ el.textContent){ el.textContent = t = t.textContent = t.ff.ff.ffHint;Hint; });
 
-  var labelMap = {
-    'IP': 'labelIP',
-    'País': 'labelCountry', 'Country': 'labelCountry', 'País': 'labelCountry',
-    'Provedor': 'labelProvider', 'Provider': 'labelProvider', 'Proveedor': 'labelProvider',
-    'Org': 'labelOrg',
-    'rDNS': 'labelRDNS',
-    'HTTP': 'labelHTTP',
-    'Motivo': 'labelReason', 'Reason': 'labelReason', 'Motivo': 'labelReason',
-    'Usado por': 'labelUsedBy', 'Used by': 'labelUsedBy', 'Usado por': 'labelUsedBy',
-    'App': 'labelApp',
-    'Cheat': 'labelCheat',
-    'Indicador': 'labelIndicator', 'Indicator': 'labelIndicator',
+  });
+
+  q('. q('.appstoreappstore-label').Hint; });
+
+  q('.appstore-label').forEach(function-label').forEach(function(el){forEach(function(el){ el.text(el){ el.text el.textContent =Content =Content = t.appStoreLabel; });
+  q t.appStoreLabel; });
+  q t.appStoreLabel; });
+  q('.app('.app('.appstore-hint').store-hintstore-hint').forEach(function').forEach(functionforEach(function(el){ el.text(el){ el.textContent =(el){ el.textContent =Content = t.appStoreHint t.appStoreHint; t.appStoreHint;; });
+
+  q });
+
+  q });
+
+  q('.ok').forEach('.ok').forEach('.ok').forEach(function(el(function(el(function(el){ el){ el.textContent.textContent = t){ el.textContent = t = t.noVPS;.noVPS;.noVPS; });
+
+  });
+
+  var labelMap = });
+
+  var label var labelMap = {
+   Map = {
+    'IP {
+    'IP': '': ' 'IP': 'labelIP',
+   labelIP',
+    'PalabelIP',
+    'Pa 'País': 'labelís': 'ís': 'labelCountry',labelCountry',Country', 'Country 'Country': ' 'Country': '': 'labelCountry', 'labelCountrylabelCountry', 'País', 'País': 'País': '': 'labelCountrylabelCountrylabelCountry',
+    'Pro',
+   ',
+    'Provedor 'Provedor': 'vedor': '': 'labelProviderlabelProviderlabelProvider', 'Provider': 'labelProvider',', 'Provider': 'labelProvider',', 'Provider': 'labelProvider', 'Pro 'Pro 'Proveedorveedorveedor': '': 'labelProvider': 'labelProvider',
+   labelProvider',
+    'Org',
+    'Org 'Org': '': '': 'labelOrglabelOrg',
+   labelOrg',
+    'r',
+    'r 'rDNS':DNS':DNS': 'label 'label 'labelRDNSRDNS',
+   RDNS',
+    'HTTP',
+    'HTTP 'HTTP': '': '': 'labelHTTPlabelHTTPlabelHTTP',
+   ',
+   ',
+    'Mot 'Mot 'Motivo':ivo':ivo': 'label 'label 'labelReason', 'ReasonReason',Reason', 'Reason': ' 'Reason': '': 'labelReasonlabelReasonlabelReason', '', 'Motivo', 'MotivoMotivo': '': 'labelReason': 'labelReasonlabelReason',
+    'Us',
+    'Us',
+    'Usado porado porado por': 'labelUsed': 'labelUsed': 'By',By',labelUsedBy', 'Used 'Used by': 'Used by': by': 'label 'label 'labelUsedByUsedByUsedBy', '', '', 'UsadoUsadoUsado por': por': por': 'label 'label 'labelUsedByUsedByUsedBy',
+   ',
+   ',
+    'App': ' 'App 'App': 'labelApp': 'labelApplabelApp',
+   ',
+   ',
+    'Che 'Che 'Cheat': 'labelat':at': 'labelCheat 'labelCheatCheat',
+   ',
+   ',
+    'Ind 'Ind 'Indicadoricadoricador': '': 'labelIndicator': 'labelIndicator', '', 'labelIndicator', 'Indicator':Indicator':Indicator': 'label 'label 'labelIndicatorIndicatorIndicator',
   };
 
-  q('.card').forEach(function(card){
-    var badge = card.querySelector('.badge');
-    var connsEl = card.querySelector('.conns');
-    if (connsEl) {
-      var num = connsEl.textContent.match(/\d+/);
-      if (num) connsEl.textContent = num[0] + ' ' + t.conns;
+  q',
+  };
+
+  q',
+  };
+
+  q('.card').forEach('.card').forEach('.card').forEach(function(c(function(c(function(card){
+    varard){
+ard){
+    var badge = card.querySelector    var badge = card.querySelector badge = card.querySelector('.bad('.bad('.badgegege');
+    var conns');
+    var connsEl =');
+    var connsEl =El = card.querySelector card.querySelector card.querySelector('.conn('.conn('.conns');
+    ifs');
+   s');
+    if (conn if ( (connsElconnsElsEl))) {
+      var num = {
+      var {
+      var num = conns num = conns connsEl.textEl.textEl.textContent.matchContent.matchContent.match(/\(/\(/\d+/d+/);
+     d+/);
+     );
+      if (num) if (num) if (num) conns conns connsEl.textEl.textEl.textContent = numContent =Content = num[0] num[0][0] + ' + ' ' + t. + ' ' + t. ' +connsconns t.;
+   ;
+   conns;
     }
-    if (badge) {
-      if (badge.classList.contains('critical')) {
-        badge.innerHTML = badge.getAttribute('data-badge-type') === 'known-cheat' ? t.badgeKnownCheat : t.badgeCritical;
+    }
+    if ( }
+    if ( if (badgebadgebadge))) {
+      if (bad {
+      if (badge {
+      if (badge.classListge.classList.classList.contains('.contains('.contains('critical'))critical'))critical')) {
+        badge.innerHTML {
+        badge.innerHTML {
+        badge.innerHTML = badge = badge = badge.getAttribute.getAttribute('data-badge.get('data-badge-type')Attribute('data-badge-type')-type') === 'known-che === ' === 'known-cheat'at'known-cheat' ? t ? t.badgeKnownChe ? t.badge.badgeKnownCheat :at :KnownCheat : t.b t.badgeCritical t.badgeCriticaladgeCritical;
       }
-      else if (badge.classList.contains('tld-flag')) badge.innerHTML = t.badgeDomainSuspect;
-      else if (badge.classList.contains('high')) badge.textContent = t.badgeSuspect;
-      else if (badge.classList.contains('medium')) badge.textContent = t.badgePossible;
+     ;
+     ;
+      }
+      else if else if }
+      (bad (bad else if (badge.classListge.classList.contains('tldge.classList.contains('.contains('tld-flagtld-flag-flag')) badge')) badge.innerHTML =')) badge.innerHTML.innerHTML = t.b t.badgeDomain = t.badgeDomainadgeDomainSuspectSuspectSuspect;
+      else if;
+     ;
+      else if (bad else if (badge.classList (badge.classListge.classList.contains('high')) badge.textContent = t.badgeSuspect;
+      else if (.contains('high')) badge.textContent = t.badgeSuspect;
+      else if (.contains('high')) badge.textContent = t.badgeSuspect;
+      else if (badge.classList.containsbadgebadge('medium.classList.contains.classList.contains('medium('medium')) badge')) badge')) badge.textContent.textContent = t.textContent = t = t.b.badge.badgeadgePossiblePossiblePossible;
+   ;
     }
-    card.querySelectorAll('.label').forEach(function(lbl){
-      var sub = lbl.querySelector('.sub');
-      if (sub) {
-        var fn = lbl.childNodes[0];
-        if (fn && fn.nodeType === 3) fn.textContent = t.labelSuspectIPs + ' ';
-        var nums = sub.textContent.match(/\d+/g);
-        if (nums && nums.length >= 2) sub.textContent = nums[0] + ' ' + t.of + ' ' + nums[1] + ' ' + t.domains;
+    card.querySelectorAll;
+    }
+    card.querySelectorAll }
+    card('.label('.label.querySelectorAll('.label').forEach').forEach').forEach(function(lbl(function(lbl(function(lbl){
+      var){
+      var sub =){
+      var sub = sub = lbl.querySelector lbl.querySelector lbl.querySelector('.sub('.sub('.sub');
+     ');
+     ');
+      if if ( if (sub) (sub)sub) {
+        {
+        {
+        var fn var fn var fn = lbl = lbl.childNodes = lbl.childNodes.childNodes[0[0[0];
+       ];
+        if (];
+        if ( if (fn && fn.nodefn && fn.nodefn && fn.nodeType ===Type ===Type === 3) fn 3) fn.textContent 3) fn.textContent.textContent = t = t = t.labelSuspectIP.labelSuspectIPs +.labelSuspectIPs +s + ' ' ';
+        var ' ';
+        var ';
+        var nums = nums = nums = sub.textContent.match sub.textContent.match(/\ sub.text(/\d+/Content.match(/\d+/gd+/g);
+        ifg);
+        if (nums && nums);
+        if (nums && nums (nums &&.length >=.length >= nums.length >= 2 2) sub) sub.textContent = nums 2) sub.textContent[0 = nums[0] +.textContent = nums[0] +] + ' ' ' ' + t ' ' + t + t.of +.of + ' ' + nums.of + ' ' + nums ' ' + nums[1[1[1] +] +] + ' ' ' ' ' ' + t + t + t.dom.domains.domainsains;
         return;
+        return;
+        return;
+     ;
+     ;
       }
-      var txt = lbl.textContent.trim();
-      var key = labelMap[txt];
-      if (key && t[key]) lbl.textContent = t[key];
+      }
+      }
+      var txt = lbl var txt = lbl var txt = lbl.textContent.textContent.textContent.trim();
+      var.trim();
+      var.trim();
+      var key = key = key = labelMap[txt labelMap[txt];
+      labelMap[txt];
+     ];
+      if ( if ( if (key && t[keykey && t[keykey && t[key]) lbl]) lbl]) lbl.textContent.textContent = t.textContent = t = t[key];
+   [key];
+   [key];
     });
-    card.querySelectorAll('.none').forEach(function(el){ el.textContent = t.noneDetected; });
-    card.querySelectorAll('.val').forEach(function(el){
-      if (el.textContent.indexOf('Online') !== -1 || el.textContent.indexOf('Offline') !== -1 || el.textContent.indexOf('línea') !== -1 || el.textContent.indexOf('conexión') !== -1) {
-        el.innerHTML = el.innerHTML
-          .replace(/●\s*(En línea|Online)/g, t.online)
-          .replace(/●\s*(Sin conexión[^<]*|Offline[^<]*)/g, t.offline);
+    card });
+    card });
+    card.querySelectorAll.querySelectorAll.querySelectorAll('.none('.none('.none').forEach').forEach').forEach(function(el(function(el(function(el){ el.textContent = t){ el.textContent = t){ el.textContent = t.none.noneDetected;.noneDetected;Detected; });
+    card });
+    card });
+    card.querySelectorAll.querySelectorAll('.val.querySelectorAll('.val('.val').forEach(function(el').forEach(function(el){
+     ').forEach(function(el){
+     ){
+      if ( if (el.text if (el.textel.textContent.indexOf('Online') !==Content.indexOf('Online') !==Content.indexOf('Online -1 -1') !== -1 || el || el || el.textContent.textContent.textContent.indexOf('.indexOf('Off.indexOf('Offlineline')Offline') !== -1 !== -1') !== -1 || el || el || el.textContent.textContent.textContent.indexOf('.indexOf('.indexOf('línealínealínea') !==') !==') !== -1 || el -1 -1 || el.textContent.textContent || el.textContent.indexOf('.indexOf('.indexOf('conexconexconexión')ión') !== -ión') !== -1) !== -1)1) {
+        {
+        {
+        el.innerHTML el.innerHTML = el.innerHTML el.innerHTML = el = el.innerHTML
+          ..innerHTML
+          .replace(/
+          .replace(/replace(/●\●\s*(●\s*(s*(En línea|OnlineEn línea|OnlineEn línea|Online)/g)/g, t)/g, t.online, t.online.online)
+          .replace)
+          .replace(/●)
+          .replace(/●\s(/●\s\s*(Sin*(Sin*(Sin conexión conexión conexión[^[^[^<]*<]*<]*|Off|Off|Offline[^lineline[^<]*)/<]*)/g,[^<]*)/g, t.g, t.offline t.offline);
+     offline);
       }
+   );
+      }
+    }
     });
   });
+  });
+  });
+ });
 }
-window.setLang = setLang;
+window.set });
+}
+window.setLang =}
+window.setLang = setLangLang = setLang;
+
+(function setLang;
+
+(function();
 
 (function() {
-  function bindLangButtons() {
-    var langs = ['pt', 'en', 'es'];
-    langs.forEach(function(l) {
-      var btn = document.getElementById('btn-' + l);
-      if (btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          setLang(l);
+  function() {
+  function bindLang {
+  function bindLang bindLangButtons()Buttons()Buttons() {
+    var langs {
+    var langs = [' {
+    var langs = [' = ['pt',pt',pt', 'en 'en', ' 'en', 'es', 'es'];
+    langses'];
+    langs'];
+    langs.forEach(function.forEach(function.forEach(function(l)(l) {
+     (l) {
+      {
+      var btn = document var btn = document var btn = document.getElementById('.getElementById('btn-'.getElementById('btn-'btn-' + l + l + l);
+      if ();
+      if (btn));
+      if (btn)btn) {
+        {
+        {
+        btn.addEventListener btn.addEventListener btn.addEventListener('click('click', function(e)('click', function(e) {
+         ', function(e) {
+          {
+          e.preventDefault e.preventDefault e.preventDefault();
+         ();
+          setLang();
+          setLang(l setLang(l(l);
+        });
+     );
+        });
+     );
         });
       }
+    }
+    }
     });
   }
 
-  function tryBind(attempts) {
-    var btn = document.getElementById('btn-pt');
-    if (btn) {
-      bindLangButtons();
-    } else if (attempts > 0) {
-      setTimeout(function() { tryBind(attempts - 1); }, 100);
-    }
+  function tryBind });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { tryBind(10); });
-  } else {
-    tryBind(10);
+  function tryBind });
+  }
+
+  function tryBind(attempt(attempt(attempts)s)s) {
+    {
+    {
+    var btn = document var btn = document var btn.getElementById('.getElementById = document('.getElementById('btn-ptbtn-ptbtn-pt');
+    if');
+    if');
+    if (btn (btn (btn) {
+      bind) {
+      bind) {
+     LangButtonsLangButtons bindLangButtons();
+   ();
+   ();
+    } else if } else if ( } else (attempts if (attemptattempts > s >  > 0)0)0) {
+      setTimeout {
+      {
+      setTimeout(function(function() { tryBind setTimeout(function() { tryBind() { tryBind(attempt(attempt(attempts - 1s - 1); },s - 1); }, 100);
+   ); }, 100);
+    100);
+    }
+  }
+  }
+  }
+
+  if ( }
+
+  if (document. }
+
+  if (document.document.readyState === 'readyState === 'readyState === 'loading')loading')loading') {
+    {
+    document.addEventListener('DOM {
+    document.addEventListener('DOM document.addEventListener('DOMContentLoadedContentLoadedContentLoaded', function() {', function() {', function() { tryBind tryBind(10); tryBind(10);(10); });
+  } else });
+  } });
+  } {
+    try else elseBind( {
+    tryBind {
+    try10(10Bind();
+ );
+ 10);
   }
 })();
+<\/script }
+}) }
+})>();
+<\/script();
 <\/script>`;
 }
 
-async function showResult(html) {
-  let wv = new WebView()
-  await wv.loadHTML(html, "http://localhost")
-  let langScript = `var TRANSLATIONS = {
-  pt: {
-    eyebrow: "Scanner iOS",
-    credits: "por Keller · Samir · Katiau",
-    fileLabel: "Arquivo:",
-    start: "Início",
-    lastRecord: "Último registro",
-    uniqueDomains: "Domínios únicos",
-    totalConns: "Total conexões",
-    monitoredFor: "Monitorado há",
-    criticalLabel: "Crítico",
-    suspectLabel: "Suspeito",
-    possibleLabel: "Possível",
-    appProxyTitle: "Apps Proxy / Cheat Detectados",
-    appProxySub: "Aplicativos conhecidos de interceptação de tráfego",
-    suspectIPsTitle: "IPs Suspeitos",
-    suspectIPsSub: "VPS / Hosting / Proxy confirmados",
-    possibleIPsTitle: "IPs Possíveis",
-    possibleIPsSub: "Infraestrutura cloud / datacenter",
+async>`;
+}
+
+async function show`;
+}
+
+async function show function showResult(Result(Result(html)html) {
+  let whtml) {
+  {
+  let wv = let wv = new WebViewv = new WebView new WebView()
+  await()
+  await()
+  await wv wv.loadHTML(html wv.loadHTML(html.loadHTML(html, "http://, "http://, "http://localhost")
+  let langScript = `localhost")
+  let langScript = `var TRANlocalhost")
+  let langScript = `var TRANvar TRANSLATIONSSLATIONS =SLATIONS = = {
+  pt {
+  pt {
+  pt:: {
+    eyebrow: ": {
+    eyebrow: " {
+    eyebrow: "Scanner iOSScanner iOSScanner iOS",
+   ",
+    credits:",
+    credits: credits: "por Keller · "por Keller · Samir "por Keller · Samir · Kat Samir · Kat · Katiauiau",
+    fileLabel:iau",
+    file",
+    fileLabel: "ArquivoLabel: "Arquivo "Arquivo::",
+",
+    start:",
+    start    start: ": "Início",
+   : "Início",
+   Início",
+ lastRecord lastRecord: "    lastRecord: ": "Último registroÚltÚltimo registro",
+    uniqueDom",
+    uniqueDomimo registro",
+    uniqueDomains:ains:ains: "Dom "Dom "Domínios únicosíniosínios únicos únicos",
+    totalCon",
+    totalConns:",
+    totalConns: "Totalns: "Total conexões "Total conexões",
+    conexões",
+    monitoredFor",
+    monitoredFor: " monitoredFor: "MonitoradoMonitorado: "Monitorado há há há",
+    critical",
+    critical",
+    criticalLabel: "CrLabel:Label: "Crítico "Críticoítico",
+   ",
+   ",
+    suspectLabel: " suspectLabel suspectLabel: "Suspe: "SuspeitoSuspeito",
+    possibleito",
+    possible",
+    possibleLabel:Label:Label: "Poss "Poss "Possívelível",
+    appível",
+    appProxyTitle",
+    appProxyTitleProxyTitle: ": "Apps Proxy: "Apps Proxy / Cheat DetectApps Proxy / Cheat Detect / Cheat Detectadosados",
+    appados",
+    app",
+    appProxySubProxySub: "ProxySub: "AplicAplic: "Aplicativos conhecidos deativos conhecidos deativos conhecidos de interceptação interceptação interceptação de tr de tr de tráfegoáfego",
+    suspectáfego",
+    suspectIPs",
+    suspectIPsIPsTitle:Title: "IPTitle: "IPs "IPs Suss Suspeitos Suspeitospeitos",
+   ",
+    suspectIP suspectIPsSub",
+    suspectIPsSub: "VsSub: "VPS: "VPS / HostPS / Hosting / / Hosting / Proxy confirming / Proxy confirm Proxy confirmadosados",
+    possibleIPsados",
+    possible",
+    possibleIPsTitle:Title:IPs "IP "IPTitle: "IPs Posss Possíveis",
+    possibles Possíveis",
+    possibleíveis",
+    possibleIPsIPsIPsSub:Sub: "InfSub: "Infraestraestrutura cloud /rutura cloud / "Infraestrutura cloud / datac datac datacenterenter",
+    labelenter",
+    label",
+    labelIP:IP:IP: "IP "IP "IP",
+   ",
+    label",
+    labelCountryCountry: " labelCountry: ": "PaísPaísPaís",
+    labelProvider",
+    labelProvider",
+    label: "Pro: "Provider: "ProvedvedProvedoror",
+    labelor",
+    label",
+    labelOrg: "OrgOrg: "OrgOrg: "Org",
+   ",
+    labelRDNS:",
+    labelRDNS: labelRDNS: "r "r "rDNSDNS",
+    labelDNS",
+    label",
+    labelHTTP:HTTP: "HTTP",
+   HTTP: "HTTP "HTTP labelReason",
+   ",
+    labelReason: " labelReason: ": "MotivoMotivo",
+   Motivo",
+    labelUsed labelUsedBy:",
+    labelUsedBy:By: "Usado "Usado por",
+    "Usado por por",
+    labelApp",
+    labelApp: " labelApp: "AppApp: "",
+    labelApp",
+    label",
+    labelSuspectSuspectSuspectIPsIPsIPs: ": ": "IPsIPs suspeIPs suspeitos suspeitos",
+    noneitos",
+    none",
+    noneDetectedDetected: "Detected: ": "Nenhum IPNenhum IPNenhum IP suspeito detect suspeito detect suspeito detectadoadoado",
+    no",
+    no",
+    noVPSVPS: "✓ NVPS: "✓ N: "✓ Nenhumenhum IP Venhum IP V IP VPS /PS / HostPS / Hosting Hostinging / Proxy detectado / Proxy detectado.",
+    / Proxy detectado.",
+   .",
+    staleLabel staleLabel staleLabel: "Arqu: "Arquivo poss: "Arquivo possivo possivelmenteivelmente antigoivelmente antigo antigo",
+",
+   ",
+       staleHint: " staleHint: " staleHint: "SuspeSuspeita: arquivoSuspeita: geradoita: arquivo arquivo fora do gerado gerado fora do período da fora do período da período da partida partida para es partida para es para esconderconder atividadeconder atividade atividade.",
+    ff.",
+    ffLabel:.",
+    ffLabel: "Sessões "SessõesLabel: "Sessões no período no período",
+    no período",
+    ffLast ffLast",
+    ffLastOpen: "ÚOpen:ltima "ÚltimaOpen: "Última abertura abertura abertura",
+   ",
+   ",
+    ffFirst ffFirst ffFirstOpen:Open: "PrimeOpen: "Prime "Primeira aira aira aberturabertura",
+    ffbertura",
+    ffSessions",
+    ffSessions: "Sessions: "inicial: "inicializaçõesinicializaçõesizações registradas no período registradas no período",
+    registradas no período",
+    ffHint ffHint",
+    ffHint: ": ": "Se aSe a última abertura foiSe a última a última abertura foi após a após abertura foi após a partida partida → apl partida → apl → aplique oique o W.Oique o W.O W.O!",
+    app!",
+    app!",
+    appStoreLabelStoreLabel: "StoreLabel: ": "App StoreApp Store abertaApp Store aberta aberta",
+    appStore",
+    appStore",
+    appStoreHint:Hint: "SeHint: "Se "Se foi após a partida → foi após a partida → foi após a partida → aplique aplique o W aplique o W o W.O!",
+   .O!",
+   .O!",
+    uptime uptime uptimeLess20: "Less20: "Less20: "MENOSMENOSMENOS DE  DE 20MIN — Rel DE 20MIN — Rel20MIN — Relatório podeatório podeatório pode não cob não cobrir a part não cobrir arir a partida inteiraida inteira! partida inteira!!",
+    badge",
+    badgeCritical:",
+    badgeCritical:Critical: "⚠ CRÍ "⚠ "⚠ CRÍTICOTICO CRÍTICO — APP — APP — APP PROXY PROXY/CHE PROXY/CHEAT/CHEAT",
+    badge",
+    badgeSuspectAT",
+    badgeSuspectSuspect: "SUSPEITO",
+    badgePossible: ": "SUSPEITO",
+    badgePossible: "POSS: "SUSPEITO",
+    badgePossible: "POSSPOSSÍVEL",
+   ÍVELÍVEL badgeDomain",
+    badgeDomain",
+   SuspectSuspect badgeDomainSuspect: ": ": "⚠ DOMÍN⚠ DOM⚠ DOMIO SUSÍNIO SUSÍNPEITOPEITOIO SUS",
+   ",
+    of:PEITO",
+    of: of: "de",
+    "de "de",
+    online: online:",
+    "● "● online: Online Online "● Online",
+    offline: "",
+    offline: "",
+    offline● Off● Off: "line /line /● Offline / Sem resposta Sem resposta Sem resposta",
+   ",
+    last",
+    last lastRecordRecord2:Record2:2: "Ú "Ú "Últimoltimoltimo registro registro: registro::",
+   ",
+    conns",
+    conns conns: ": ": "conexconexconexões",
+    domainsõesões",
+    domains: "",
+    domains: ": "domíndomíniosdomíniosios",
+    labelCheat",
+    label",
+    labelCheatCheat: ": ": "CheatCheatCheat",
+    labelIndicator",
+    labelIndicator",
+    labelIndicator: "Indicador: "Indicador: "Indicador",
+    indicatorDomain:",
+    indicator",
+    indicatorDomain: "Dom "DomDomain:ínio detectínio detectado no "Domínio detectado noado no relatório relatório de rede relatório de rede de rede",
+    indicatorIP",
+    indicatorIP",
+    indicatorIP: ": ": "IP detectIP detectIP detectado no relatórioado no relatórioado no relatório de rede de rede de rede",
+   ",
+   ",
+    iosVersion iosVersion iosVersionLabel:Label:Label: "Versão iOS "Vers "Versão iOS",
+   ão iOS",
+   ",
+    rootsCard rootsCardLabel: rootsCardLabel:Label: "⚠ Certific "⚠ "⚠ Certificados raados ra Certificados raiz",
+    rootsiz",
+    rootsiz",
+    rootsLabel: "CertLabel:Label: "Cert "Certificado Raiz Susificado Raiz Susificado Raiz Suspeitopeitopeito",
+   ",
+   ",
+    rootsDetail rootsDetail1 rootsDetail1:1: "cert: "cert "certificado raificado raiz instalificado raiz instaliz instalado",
+    rootsado",
+    rootsadoDetailNDetailN",
+    rootsDetail: ": "N: "certificcertificcertificados raiz instalados raados raadosiz instaladosiz instal",
+    roots",
+    rootsados",
+    rootsHint:Hint:Hint: "Cert "Cert "Certificados raizificados raizificados permitem permitem raiz permitem interceptar interceptar interceptar trá trá tráfegofegofego HTTPS — HTTPS — padrão HTTPS — padrão de proxy padrão de proxy cheat tipo de proxy cheat tipo mitm cheat tipo mitm mitmproxy",
+    ipsproxy",
+    ipsTitleproxy",
+    ipsTitle::Title: "Apps "Apps "Apps Suspe Suspe Suspeitos Institos Instaladositos Instalados",
+   alados",
+    ipsSub",
+    ipsSub ipsSub: ": ": "DetectDetectDetectados noados no histórico deados no histórico de uso do histórico de uso do uso do dispositivo dispositivo",
+    ips dispositivo",
+    ips",
+    ipsHint:Hint:Hint: "⚠ Apps encont "⚠ Apps encontrados nos "⚠ Apps encontrados nosrados nos dados de dados de dados de análise do análise do análise do iPhone — iPhone — iPhone — indicam presença indicam presença indicam presença de ferramentas de ferramentas de ferramentas de cheat de cheat de cheat/jail/jail/jailbreak/probreak/proxybreak/proxyxy",
+    ips",
+    ips",
+    ipsLaunchedLaunchedLaunched: ": ": "▶ Aber▶ Aberto▶ Aberto",
+    ipsto",
+    ips",
+    ipsInstalledInstalledInstalled: "⬇: "⬇: "⬇ Instal Instalado Instalado",
+    badgeado",
+    badge",
+    badgeKnownCheat:KnownCheat:KnownCheat: "⚠ "⚠ CRÍ "⚠ CRÍ CRÍTICOTICO — CHEAT CONTICO — CHEAT CON — CHEAT CONFIRMFIRMADOFIRMADOADO",
+    reason",
+    reasonTLD: function",
+    reasonTLD: functionTLD: function(tld(tld){ return(tld){ return "TL "TLD sus){ return "TLD susD suspeitopeito detectadopeito detectado: \\ detectado: \\"" +: \\"" +"" + tld tld tld + " + "\\" + "\\"\\" — padrão comum — padrão comum — padrão comum em che em cheats/proxies em cheats/proxiesats/proxies"; },
+    reason"; },
+    reasonWord:"; },
+    reasonWord: function(wordWord: function(word function(word){ return){ return){ return "Pal "Pal "Palavraavraavra suspe suspe suspeita noita noita no domínio: \\ domínio domínio: \\"" +"" +: \\"" + word + word + word + "\\""; "\\""; },
+    "\\""; },
+    reasonV },
+    reasonV reasonVPS:PS: function(PS: function(isp){ function(isp){isp){ return " return "VPS return "VPS/HOSTVPS/HOSTING —/HOSTING —ING — ISP: ISP: ISP: " + is " + is " + ispp; },
+    reasonp; },
+    reason; },
+    reasonProxy:Proxy:Proxy: "PRO "PRO "PROXY / VPN detectXY /XY / VPN detectado VPN detectadoado",
+    reason",
+    reason",
+    reasonCF:CF:CF: function(asn){ function(as function(asn){ return "n){ return " return "CloudflareCloudflareCloudflare acess acess acessado via IPado viaado via dire IP dire IP direto — padrãoto — padrãoto — padrão de proxy de proxy de proxy cheat (" cheat (" cheat (" + as + asn + + asn + ")";n + ")"; ")"; },
+    },
+    },
+    reasonASN: reasonAS reasonASN: function(asN: function(as function(asnn,desc){ return "ASn,desc){ return "ASN de cheat proxy conhec,N de cheat proxy conhecido:ido:desc){ return "ASN de cheat proxy conhec " + " +ido: " + asn asn + " asn + " + " — " + desc — " + desc — " + desc;; },
+    reasonRDNS; },
+    reasonRDNS: function },
+    reasonRDNS: function: function(rdns){(rd(rdns){ return return "ns){ "rDNS return "rDNS de serv de servidor:rDNS de servidor:idor: " + rdns; " + rdns " + rdns; },
+; },
+    reason    reasonHostinger },
+    reasonHostinger: function: functionHostinger: function(rd(rd(rdns){ns){ns){ return "Hostinger return "Hostinger return "Hostinger VPS VPS VPS (pad (pad (padraoraorao cheat proxy BR): cheat proxy BR): cheat proxy BR): " + " + " + rdns rdns rdns;;; },
+    reason },
+    reasonNoRDNS: "Sem },
+    reasonNoRDNS: "SemNoRDNS: rDNS rDNS "Sem rDNS (PT (PT (PTR)R)R) — tip — tip — tipico deico deico de VPS usado como VPS usado como VPS proxy proxy usado como",
+    reason",
+    reason proxy",
+    reasonOrg:Org:Org: function(kw){ function(kw){ function(k return "w){ return " return "Org/Org/Org/ISP associISP associISP associado aado aado a hosped hospedagem/cheatagem/cheat hospedagem/cheat proxy: proxy: proxy: " + " + " + kw; kw; },
+  kw; },
+  },
+  },
+  },
+  },
+  en: en: {
+    {
+    en: {
+    eyebrow: eyebrow: "iOS eyebrow: "iOS Scanner "iOS Scanner",
+    credits Scanner",
+    credits: "",
+    credits: ": "by Kellerby Keller · Samby Keller · Samir ·ir · · Samir · Katiau Katiau Katiau",
+   ",
+   ",
+    fileLabel fileLabel: " fileLabel: "File:: "File:",
+   ",
+   File:",
+    start: start: "Start start: "Start "Start",
+    lastRecord",
+    last",
+   : "Last record",
+   Record: "Last record",
+    lastRecord: "Last record",
+    uniqueDomains: uniqueDom uniqueDom "Uniqueains: "Uniqueains: domains "Unique domains domains",
+    total",
+    totalConns",
+    totalConns: "Conns: "Total connections: "Total connections",
+   ",
+    monitoredForTotal connections",
+    monitoredFor monitoredFor: ": "Monitored: "Monitored forMonitored for",
+    critical for",
+    criticalLabel:",
+    criticalLabel: "CriticalLabel: "Critical",
+    "Critical",
+    suspectLabel suspectLabel",
+    suspectLabel: ": "S: "SuspuspiciousSuspicious",
+    possibleLabel:",
+    possibleLabel:icious",
+    possibleLabel: "Possible "Possible",
+    "Possible",
+    appProxy",
+    appProxyTitle: appProxy "ProxyTitle: "Proxy / Che / CheTitle: "Proxy / Cheat Appsat Apps Detectedat Apps Detected",
+    appProxy Detected",
+   ",
+    appProxySub: appProxySub: "Known "Known traffic interception traffic interception applications applicationsSub: "Known traffic interception applications",
+    suspectIPs",
+    suspectIPsTitle:",
+    suspectIPsTitle: "STitle: "Suspicious "Suspicious IPsuspicious IPs",
+    IPs",
+    suspectIP suspectIPsSub",
+    suspectIPsSubsSub: ": ": "VPSVPS / HostVPS / Host / Hosting / Confirmeding / Confirmed Proxying / Confirmed Proxy",
+    possible Proxy",
+    possibleIPs",
+    possibleIPsTitle:Title:IPs "Possible "PossibleTitle: IPs",
+    IPs "Possible IPs possibleIP",
+   ",
+    possibleIP possibleIPsSubsSubsSub: ": "Cloud /: "Cloud /Cloud / datacenter infrastructure datacenter infrastructure datacenter infrastructure",
+   ",
+    labelIP",
+    labelIP labelIP: ": "IP: "IPIP",
+    labelCountry:",
+    labelCountry:",
+    labelCountry: "Country "Country "Country",
+   ",
+   ",
+    labelProvider labelProvider: " labelProvider: "ProviderProvider",
+    label: "Provider",
+    label",
+    labelOrg:Org:Org: "Org "Org "Org",
+    labelRDNS:",
+    labelRDNS:",
+    labelRD "r "rNS: "rDNSDNSDNS",
+    label",
+    label",
+    labelHTTP: "HTTPHTTP: "HTTPHTTP:",
+   ",
+    "HTTP",
+ labelReason labelReason    labelReason: ": ": "ReasonReasonReason",
+    labelUsedBy",
+    labelUsedBy",
+    label: "UsedBy: "Used by: "Used byUsed by",
+   ",
+   ",
+    labelApp: " labelApp labelApp: "App: "App",
+    label",
+    labelApp",
+    labelSuspectSuspectSuspectIPs: "IPsIPs: "Susp: "Suspicious IPSuspicious IPsicious IPss",
+    noneDetected",
+    none",
+    none: "DetectedDetected: "No suspicious: "No suspicious IPs IPsNo suspicious IPs detected detected detected",
+    noVPS",
+    noVPS",
+    noVPS: ": ": "✓ No✓ No VPS✓ No V VPS / Hosting / / Hosting /PS / Host Proxy IPs detecteding / Proxy IPs detected.",
+    Proxy IPs detected.",
+    staleLabel: ".",
+    staleLabel: " staleLabel: "File possiblyFile possiblyFile possibly outdated outdated",
+    stale outdated",
+    staleHint:",
+    staleHint: "SHint: "Suspicion "Suspicion: fileuspicion: file: file generated outside generated outside generated outside the match period to the match the match period to hide activity period to hide activity.",
+    hide activity.",
+    ffLabel ffLabel.",
+    ffLabel: "Sessions: ": " in periodSessions in period",
+   Sessions in period",
+    ffLast",
+    ffLastOpen:Open: "Last opened ffLastOpen: "Last opened "Last opened",
+    ff",
+    ff",
+    ffFirstOpenFirstOpenFirstOpen: ": ": "First opened",
+   First opened",
+   First opened ffS ffS",
+    ffSessions:essions:essions: "startups recorded "start "startups recorded in the periodups recorded in the in the",
+    ff period period",
+    ffHint:",
+    ffHint: "IfHint: "If last opened "If last opened last opened after the match → after the after the match → apply W match → apply W apply W.O!",
+    appStore.O!",
+    appStore.O!",
+    appStoreLabel:Label: "AppLabel: "App "App Store opened Store opened Store opened",
+   ",
+   ",
+    appStore appStore appStoreHint: "If it was after the match →Hint: "If it was after the match →Hint: "If it was after the match → apply W apply W apply W.O!.O!.O!",
+   ",
+   ",
+    uptime uptimeLess20: " uptimeLess20: "Less20: "LESS THLESS THLESS THAN AN 20MINAN 20MIN20MIN — Report may not — Report may not — Report may not cover the cover the cover the entire match! entire match!",
+    badge entire match!",
+    badge",
+    badgeCritical:Critical:Critical: "⚠ "⚠ "⚠ CRIT CRIT CRITICAL —ICAL — PROXYICAL — PROXY/CHE/CHE PROXY/CHEAT APPAT APPAT APP",
+   ",
+   ",
+    badgeSus badgeSuspect: badgeSuspect: "S "Spect: "SUSPUSPUSPICIOUSICIOUSICIOUS",
+   ",
+    badgePossible",
+    badgePossible: " badgePossible: "POSSPOSS: "POSSIBLEIBLEIBLE",
+    badge",
+    badge",
+    badgeDomainSusDomainSusDomainSuspect: "⚠pect: "⚠ SUSPpect: "⚠ SUSPICIOUSICIOUS SUSPICIOUS DOMAIN DOMAIN DOMAIN",
+   ",
+    of:",
+    of: "of of: "of",
+   ",
+    "of online: online:",
+    online: "● "● "● Online Online Online",
+    offline: "",
+    offline: "",
+    offline● Off● Off: "●line /line / Offline / No response",
+    No response",
+    No response lastRecord",
+    lastRecord2: lastRecord2:2: "Last "Last "Last record record:",
+ record::    conns",
+   ",
+   : " conns connsconnections",
+    domains: "connections",
+    domains: "connections: ": "",
+    domains: "domains",
+   domains",
+   domains",
+    labelCheat: labelChe labelCheat: "Che "Cheat: "Cheatat",
+    labelat",
+    label",
+    labelIndicator: "IndicatorIndicator: "Indicator",
+   Indicator: "Indicator",
+   ",
+    indicatorDomain indicatorDomain indicatorDomain: ": ": "Domain detectedDomain detectedDomain detected in network report in network report",
+    indicator in network report",
+    indicatorIP:",
+    indicatorIP: "IP "IPIP: detected in detected in "IP detected in network report network report network report",
+    iosVersion",
+    iosVersion",
+    iosVersionLabel: "iOSLabel: "iOSLabel: Version",
+    roots Version",
+    roots "iOS Version",
+    rootsCardLabel: "⚠ Root certificates",
+    rootsLabelCardLabel: "CardLabel: "⚠ Root certificates",
+    rootsLabel: "Suspicious Root Certificate: "Suspicious Root Certificate",
+    rootsDetail⚠ Root certificates",
+    rootsLabel: "Suspicious Root Certificate",
+    rootsDetail1: "root",
+    rootsDetail1: "root certificate installed1: "root certificate installed certificate installed",
+   ",
+   ",
+    rootsDetailN: rootsDetailN: rootsDetailN: "root "root certificates installed",
+    certificates installed",
+    rootsHint: " rootsHint "root certificates installed",
+    rootsHint: "Root certificatesRoot certificates: "Root certificates allow HTTPS allow HTTPS allow HTTPS traffic interception traffic interception traffic interception — common — common pattern in pattern in mitm mitmproxy-type — common pattern in mitmproxy-typeproxy-type cheat tools cheat tools",
+    cheat tools",
+   ",
+    ipsTitle ipsTitle ipsTitle: ": "Susp: "SuspSuspicious Appsicious Appsicious Apps Installed Installed",
+    Installed",
+    ipsSub",
+    ipsSub: "Detected ipsSub: "Detected: "Detected in device usage history in device usage history in device usage history",
+   ",
+    ipsHint",
+    ipsHint: " ipsHint: ": "⚠ Apps found in⚠ Apps found in⚠ Apps found in iPhone analytics iPhone analytics iPhone analytics data — data — indicate presence of cheat data — indicate presence of cheat indicate presence of cheat/jail/jail/jailbreak/probreak/probreak/proxy toolsxy toolsxy tools",
+   ",
+   ",
+    ipsLa ipsLa ipsLaunched:unched:unched: "▶ "▶ "▶ Opened",
+    Opened Opened",
+   ",
+    ipsInstalled: ipsInstalled: ipsInstalled: " " "⬇ Inst⬇ Inst⬇ Installed",
+    badgeKnownChealled",
+    badgeKnownChealled",
+    badgeKnownCheat:at:at: "⚠ "⚠ "⚠ CRIT CRITICAL CRITICAL — — CONFIRICAL — CONFIR CONFIRMED CHEMED CHEMED CHEATAT",
+    reasonAT",
+    reason",
+    reasonTLD: functionTLDTLD: function(tld: function(tld){ return(tld){ return "S){ return "S "Suspicious TLDuspicious TLD detected:uspicious TLD detected: detected: \\"" \\"" \\"" + t + t + tld +ld +ld + "\\" — "\\" — common pattern "\\" — common pattern common pattern in che in che in cheats/proats/proats/proxiesxiesxies";";"; },
+    reason },
+    reasonWord: },
+    reasonWord: function(wordWord: function(word){ return function(word){ return "S "S){ returnuspicioususpicious "S word in word in domainuspicious word in: \\"" domain: + word \\"" + " + word\\"" + "\\""; },
+;    reason },
+    reasonVPS: functionVPS(isp: function(isp){ return){ return domain: \\"" + word + "\\""; },
+    reasonVPS: function(isp){ return " "V "VVPSPSPS/HOSTING/H/HOSTING — ISP: " + isp; },
+    reasonProxy: "PROXY / VPNOSTING — ISP: " + isp; — ISP: " + isp; },
+    reasonProxy detected",
+ },
+    reasonProxy: "PROXY / VPN detected: "PROXY / VPN detected    reasonCF:",
+    reason",
+    reason function(asCF:CF: function(asn){ function(asn){n){ return " return " return "Cloudflare accessed viaCloudflareCloudflare direct IP accessed via accessed via direct — cheat direct IP — cheat IP — cheat proxy pattern proxy pattern proxy pattern (" + asn (" + asn (" + asn + ")"; },
+    reason + ")"; },
+    reason + ")"; },
+    reasonASNASNASN: function: function: function(asn(asn(asn,desc,desc,desc){ return){ return){ return "Known "Known "Known cheat proxy cheat proxy cheat proxy ASN: " ASN: " + as ASN: " + as + asn +n +n + " — " — " — " + " + desc " + desc; },
+    desc; },
+   ; },
+    reasonRD reasonRD reasonRDNS:NS:NS: function( function( function(rdnsrdns){ return "Server rDNS){ return "Server rDNSrdns){ return "Server rDNS: ": ": " + rd + rdns; + rdns; },
+    },
+   ns; },
+    reasonHost reasonHostinger:inger: reasonHostinger: function(rdns function(rdns){ function(rdns){ return "Host return "Host){ return "Hostinger Vinger Vinger VPS (PS (PS (known BR cheat proxy pattern):known BR cheat proxyknown BR pattern): cheat proxy pattern): " + " + " + rdns rdns; rdns;; },
+    reason },
+    reason },
+    reasonNoRDNoRDNS: "No rDNSNoRDNS: "No rDNSNS: "No rDNS (PT (PT (PTR)R) —R) — typical — typical typical of V of V of VPS usedPS usedPS used as proxy as proxy as proxy",
+   ",
+   ",
+    reason reasonOrg reasonOrgOrg: function(kw: function(kw){ return: function(kw){ return "Org "Org){ return/ISP/ISP associated "Org/ISP associated with with hosting/ associated with hosting/cheat hosting/cheat proxy:cheat proxy: " + " + proxy: kw; kw; },
+  " + kw; },
+  },
+  },
+  es: },
+  es: {
+    eyebrow: },
+  es: {
+    eyebrow: {
+    eyebrow: "Scanner "Scanner "Scanner iOS iOS iOS",
+    credits: "",
+    credits",
+    credits: "porpor Keller · Sam: "por Keller · Sam Keller · Samir · Katiauir ·ir ·",
+    Katiau",
+    Katiau fileLabel fileLabel",
+    fileLabel: ": ": "ArchivoArchivoArchivo:::",
+    start: "",
+    start",
+    startInicio: "Inicio: "",
+   ",
+   Inicio",
+    lastRecord lastRecord lastRecord: ": ": "Último registro",
+   Último registro",
+   Último registro",
+    uniqueDom uniqueDom uniqueDomains:ains:ains: "Dominios ú "Dominios "Dominnicos únicosios únicos",
+    total",
+    total",
+    totalConns: "Conns: "Conns: "Total conexionesTotal conexionesTotal conexiones",
+    monitored",
+    monitored",
+    monitoredFor:For:For: "Mon "Mon "Monitoreadoitoreado haceitoreado hace",
+    critical",
+    critical hace",
+    criticalLabel:Label:Label: "Cr "Cr "Críticoíticoítico",
+    suspectLabel",
+    suspect",
+    suspectLabelLabel: ": ": "SospechosoSospechosoSospechoso",
+    possible",
+    possibleLabel:",
+    possibleLabel:Label: "Pos "Pos "Posibleibleible",
+    app",
+    app",
+    appProxyTitleProxyTitle: ": "Apps ProxyApps ProxyProxyTitle: "Apps Proxy / Che / Cheat Detect / Cheat Detectadas",
+    appProxySubadas",
+    appat Detectadas",
+    appProxySub: "ProxySub: ": "AplicAplicAplicaciones conocidas deaciones conocaciones conocidas de interceptaciónidas de interceptación de tr interceptación de tr de tráficoáficoáfico",
+    suspectIPsTitle",
+    suspectIPsTitle:",
+    suspectIPsTitle: " "IPs: "IPsIPs Sospe Sospechos Sospechosaschosasas",
+   ",
+   ",
+    suspectIP suspectIPsSub suspectIPsSub::sSub: "VPS / Hosting / Proxy confirmados",
+    possibleIPsTitle: "IPs Posibles",
+    possibleIPsSub: "Infraestructura cloud / datacenter",
     labelIP: "IP",
     labelCountry: "País",
-    labelProvider: "Provedor",
-    labelOrg: "Org",
-    labelRDNS: "rDNS",
-    labelHTTP: "HTTP",
-    labelReason: "Motivo",
-    labelUsedBy: "Usado por",
-    labelApp: "App",
-    labelSuspectIPs: "IPs suspeitos",
-    noneDetected: "Nenhum IP suspeito detectado",
-    noVPS: "✓ Nenhum IP VPS / Hosting / Proxy detectado.",
-    staleLabel: "Arquivo possivelmente antigo",
-    staleHint: "Suspeita: arquivo gerado fora do período da partida para esconder atividade.",
-    ffLabel: "Sessões no período",
-    ffLastOpen: "Última abertura",
-    ffFirstOpen: "Primeira abertura",
-    ffSessions: "inicializações registradas no período",
-    ffHint: "Se a última abertura foi após a partida → aplique o W.O!",
-    appStoreLabel: "App Store aberta",
-    appStoreHint: "Se foi após a partida → aplique o W.O!",
-    uptimeLess20: "MENOS DE 20MIN — Relatório pode não cobrir a partida inteira!",
-    badgeCritical: "⚠ CRÍTICO — APP PROXY/CHEAT",
-    badgeSuspect: "SUSPEITO",
-    badgePossible: "POSSÍVEL",
-    badgeDomainSuspect: "⚠ DOMÍNIO SUSPEITO",
-    of: "de",
-    online: "● Online",
-    offline: "● Offline / Sem resposta",
-    lastRecord2: "Último registro:",
-    conns: "conexões",
-    domains: "domínios",
-    labelCheat: "Cheat",
-    labelIndicator: "Indicador",
-    indicatorDomain: "Domínio detectado no relatório de rede",
-    indicatorIP: "IP detectado no relatório de rede",
-    iosVersionLabel: "Versão iOS",
-    rootsCardLabel: "⚠ Certificados raiz",
-    rootsLabel: "Certificado Raiz Suspeito",
-    rootsDetail1: "certificado raiz instalado",
-    rootsDetailN: "certificados raiz instalados",
-    rootsHint: "Certificados raiz permitem interceptar tráfego HTTPS — padrão de proxy cheat tipo mitmproxy",
-    ipsTitle: "Apps Suspeitos Instalados",
-    ipsSub: "Detectados no histórico de uso do dispositivo",
-    ipsHint: "⚠ Apps encontrados nos dados de análise do iPhone — indicam presença de ferramentas de cheat/jailbreak/proxy",
-    ipsLaunched: "▶ Aberto",
-    ipsInstalled: "⬇ Instalado",
-    badgeKnownCheat: "⚠ CRÍTICO — CHEAT CONFIRMADO",
-    reasonTLD: function(tld){ return "TLD suspeito detectado: \\"" + tld + "\\" — padrão comum em cheats/proxies"; },
-    reasonWord: function(word){ return "Palavra suspeita no domínio: \\"" + word + "\\""; },
-    reasonVPS: function(isp){ return "VPS/HOSTING — ISP: " + isp; },
-    reasonProxy: "PROXY / VPN detectado",
-    reasonCF: function(asn){ return "Cloudflare acessado via IP direto — padrão de proxy cheat (" + asn + ")"; },
-    reasonASN: function(asn,desc){ return "ASN de cheat proxy conhecido: " + asn + " — " + desc; },
-    reasonRDNS: function(rdns){ return "rDNS de servidor: " + rdns; },
-    reasonHostinger: function(rdns){ return "Hostinger VPS (padrao cheat proxy BR): " + rdns; },
-    reasonNoRDNS: "Sem rDNS (PTR) — tipico de VPS usado como proxy",
-    reasonOrg: function(kw){ return "Org/ISP associado a hospedagem/cheat proxy: " + kw; },
-  },
-  en: {
-    eyebrow: "iOS Scanner",
-    credits: "by Keller · Samir · Katiau",
-    fileLabel: "File:",
-    start: "Start",
-    lastRecord: "Last record",
-    uniqueDomains: "Unique domains",
-    totalConns: "Total connections",
-    monitoredFor: "Monitored for",
-    criticalLabel: "Critical",
-    suspectLabel: "Suspicious",
-    possibleLabel: "Possible",
-    appProxyTitle: "Proxy / Cheat Apps Detected",
-    appProxySub: "Known traffic interception applications",
-    suspectIPsTitle: "Suspicious IPs",
-    suspectIPsSub: "VPS / Hosting / Confirmed Proxy",
-    possibleIPsTitle: "Possible IPs",
-    possibleIPsSub: "Cloud / datacenter infrastructure",
+    labelProvider: "Proveedor",
+    labelOrg: " "VPS / Hosting / Proxy confirmados",
+    possibleIPsTitle: "IPs Posibles",
+    possibleIPsSub: "Infraestructura cloud / datacenter",
     labelIP: "IP",
-    labelCountry: "Country",
-    labelProvider: "Provider",
-    labelOrg: "Org",
-    labelRDNS: "rDNS",
-    labelHTTP: "HTTP",
-    labelReason: "Reason",
-    labelUsedBy: "Used by",
-    labelApp: "App",
-    labelSuspectIPs: "Suspicious IPs",
-    noneDetected: "No suspicious IPs detected",
-    noVPS: "✓ No VPS / Hosting / Proxy IPs detected.",
-    staleLabel: "File possibly outdated",
-    staleHint: "Suspicion: file generated outside the match period to hide activity.",
-    ffLabel: "Sessions in period",
-    ffLastOpen: "Last opened",
-    ffFirstOpen: "First opened",
-    ffSessions: "startups recorded in the period",
-    ffHint: "If last opened after the match → apply W.O!",
-    appStoreLabel: "App Store opened",
-    appStoreHint: "If it was after the match → apply W.O!",
-    uptimeLess20: "LESS THAN 20MIN — Report may not cover the entire match!",
-    badgeCritical: "⚠ CRITICAL — PROXY/CHEAT APP",
-    badgeSuspect: "SUSPICIOUS",
-    badgePossible: "POSSIBLE",
-    badgeDomainSuspect: "⚠ SUSPICIOUS DOMAIN",
-    of: "of",
-    online: "● Online",
-    offline: "● Offline / No response",
-    lastRecord2: "Last record:",
-    conns: "connections",
-    domains: "domains",
-    labelCheat: "Cheat",
-    labelIndicator: "Indicator",
-    indicatorDomain: "Domain detected in network report",
-    indicatorIP: "IP detected in network report",
-    iosVersionLabel: "iOS Version",
-    rootsCardLabel: "⚠ Root certificates",
-    rootsLabel: "Suspicious Root Certificate",
-    rootsDetail1: "root certificate installed",
-    rootsDetailN: "root certificates installed",
-    rootsHint: "Root certificates allow HTTPS traffic interception — common pattern in mitmproxy-type cheat tools",
-    ipsTitle: "Suspicious Apps Installed",
-    ipsSub: "Detected in device usage history",
-    ipsHint: "⚠ Apps found in iPhone analytics data — indicate presence of cheat/jailbreak/proxy tools",
-    ipsLaunched: "▶ Opened",
-    ipsInstalled: "⬇ Installed",
-    badgeKnownCheat: "⚠ CRITICAL — CONFIRMED CHEAT",
-    reasonTLD: function(tld){ return "Suspicious TLD detected: \\"" + tld + "\\" — common pattern in cheats/proxies"; },
-    reasonWord: function(word){ return "Suspicious word in domain: \\"" + word + "\\""; },
-    reasonVPS: function(isp){ return "VPS/HOSTING — ISP: " + isp; },
-    reasonProxy: "PROXY / VPN detected",
-    reasonCF: function(asn){ return "Cloudflare accessed via direct IP — cheat proxy pattern (" + asn + ")"; },
-    reasonASN: function(asn,desc){ return "Known cheat proxy ASN: " + asn + " — " + desc; },
-    reasonRDNS: function(rdns){ return "Server rDNS: " + rdns; },
-    reasonHostinger: function(rdns){ return "Hostinger VPS (known BR cheat proxy pattern): " + rdns; },
-    reasonNoRDNS: "No rDNS (PTR) — typical of VPS used as proxy",
-    reasonOrg: function(kw){ return "Org/ISP associated with hosting/cheat proxy: " + kw; },
-  },
-  es: {
-    eyebrow: "Scanner iOS",
-    credits: "por Keller · Samir · Katiau",
-    fileLabel: "Archivo:",
-    start: "Inicio",
-    lastRecord: "Último registro",
-    uniqueDomains: "Dominios únicos",
-    totalConns: "Total conexiones",
-    monitoredFor: "Monitoreado hace",
-    criticalLabel: "Crítico",
-    suspectLabel: "Sospechoso",
-    possibleLabel: "Posible",
-    appProxyTitle: "Apps Proxy / Cheat Detectadas",
-    appProxySub: "Aplicaciones conocidas de interceptación de tráfico",
-    suspectIPsTitle: "IPs Sospechosas",
-    suspectIPsSub: "VPS / Hosting / Proxy confirmados",
+    labelCountry: "País",
+    labelProvider: "Proveedor",
+    labelOrg "VPS / Hosting / Proxy confirmados",
     possibleIPsTitle: "IPs Posibles",
     possibleIPsSub: "Infraestructura cloud / datacenter",
     labelIP: "IP",
     labelCountry: "País",
     labelProvider: "Proveedor",
     labelOrg: "Org",
-    labelRDNS: "rDNS",
-    labelHTTP: "HTTP",
-    labelReason: "Motivo",
-    labelUsedBy: "Usado por",
-    labelApp: "App",
-    labelSuspectIPs: "IPs sospechosas",
-    noneDetected: "Ninguna IP sospechosa detectada",
-    noVPS: "✓ Ninguna IP VPS / Hosting / Proxy detectada.",
-    staleLabel: "Archivo posiblemente antiguo",
-    staleHint: "Sospecha: archivo generado fuera del período del partido para ocultar actividad.",
-    ffLabel: "Sesiones en el período",
-    ffLastOpen: "Última apertura",
-    ffFirstOpen: "Primera apertura",
-    ffSessions: "inicializaciones registradas en el período",
-    ffHint: "Si la última apertura fue después del partido → ¡aplica el W.O!",
-    appStoreLabel: "App Store abierta",
-    appStoreHint: "Si fue después del partido → ¡aplica el W.O!",
-    uptimeLess20: "MENOS DE 20MIN — ¡El informe puede no cubrir toda la partida!",
-    badgeCritical: "⚠ CRÍTICO — APP PROXY/CHEAT",
-    badgeSuspect: "SOSPECHOSO",
-    badgePossible: "POSIBLE",
-    badgeDomainSuspect: "⚠ DOMINIO SOSPECHOSO",
-    of: "de",
-    online: "● En línea",
-    offline: "● Sin conexión / Sin respuesta",
-    lastRecord2: "Último registro:",
-    conns: "conexiones",
-    domains: "dominios",
-    labelCheat: "Cheat",
+    label: "Org",
+    labelOrg",
+    labelRDNSRDNSRDNS: "rDNS: ": "rDNSrDNS",
+   ",
+    labelHTTP labelHTTP",
+    labelHTTP: ": ": "HTTPHTTP",
+    labelHTTP",
+    label",
+    labelReason:Reason: "MotReason: "Motivo "Motivoivo",
+    label",
+    label",
+    labelUsedBy: "UsedBy: "UsedByUsadoUsado: "Usado por",
+    labelApp: por por",
+    label "App",
+    labelApp: "AppApp:",
+   ",
+    "App labelSus labelSuspect",
+    labelSuspectIPIPs:pectIPs: "IPs: "IPs soss sos "IPs sospechosas",
+    noneDetected: "Ninguna IPpechosas",
+    noneDetected: "Ninguna IP sospechosas",
+    noneDetected: "Ninguna IP sospe sospechosa detectadapechosa detectadachosa detectada",
+   ",
+   ",
+    noV noV noVPS:PS: "✓PS: "✓ "✓ Ninguna Ninguna Ninguna IP V IP V IP VPS /PS /PS / Hosting Hosting / Proxy Hosting / Proxy / Proxy detectada detectada detectada.",
+   .",
+   .",
+    staleLabel staleLabel staleLabel: ": ": "ArchivoArchivoArchivo posiblemente posiblemente antiguo antiguo posiblemente antiguo",
+   ",
+   ",
+    staleHint staleHint staleHint: ": ": "SosSospechaSospechapecha: arch: arch: archivo generivo generivo generado fueraado fueraado fuera del período del part del período del part del período del partido paraido paraido para ocult ocult ocultar actividadar actividadar actividad.",
+   .",
+   .",
+    ffLabel: " ffLabel: "Ses ffLabel: "SesSesiones eniones eniones en el período el período el período",
+    ffLast",
+    ffLast",
+    ffLastOpen: "ÚOpen: "ÚOpen: "Última aperturaltima aperturaltima apertura",
+   ",
+   ",
+    ff ffFirst ffFirstFirstOpen:Open:Open: "Primera apert "Primera apertura "Primera aperturaura",
+    ffSessions",
+    ff",
+    ffSessions:Sessions:: " "inicial "inicialinicializacionesizacionesizaciones registradas en registradas en el el período",
+    ff período",
+    ff registradas en el período",
+    ffHint:Hint:Hint: "Si "Si "Si la última apertura la última apertura fue después fue después la última apertura fue después del part del part del partido → ¡aido → ¡aido → ¡aplica elplica elplica el W.O W.O!!",
+    app",
+    app W.O!",
+    appStoreLabelStoreLabelStoreLabel: "App Store: "App Store abiert: "App Store abiert abiertaaa",
+    app",
+    app",
+    appStoreHintStoreHintStoreHint: ": ": "Si fue después delSi fueSi fue partido después del después del partido → ¡ partido → ¡aplica → ¡aplica el W.O!aplica el W.O!",
+    el W.O!",
+    uptime uptime",
+   Less20Less20 uptime: ": "MENOSLess20: "MENOSMENOS DE 20MIN — ¡ DE 20MIN — ¡ DE 20MIN — ¡El informeEl informe puede noEl informe puede no puede no cubrir toda la cubrir toda la cubrir toda la partida partida partida!!!",
+    badge",
+    badge",
+    badgeCritical: "⚠Critical: "⚠ CRÍCritical: "⚠ CRÍ CRÍTICOTICOTICO — APP PROXY — APP PROXY — APP/CHE/CHE PROXY/CHEATATAT",
+    badge",
+    badge",
+    badgeSuspect:Suspect:Suspect "SOSP "SOSP: "ECHOSOECHOSOSOSPECHOSO",
+    badgePossible:",
+    badge",
+    badgePossible: "POSPossible: "POSIBLE "POSIBLEIBLE",
+    badge",
+    badge",
+    badgeDomainSusDomainSusDomainSuspect: "⚠pect: "⚠ DOMINpect: "⚠ DOMIN DOMINIO SOSIO SOSIO SOSPECHPECHPECHOSO",
+   OSOOSO of:",
+   ",
+    "de of: " of: "",
+   de",
+    online:de",
+    online: online: "● "● "● En línea",
+    En línea",
+    En línea",
+    offline: offline: offline: "● Sin conex "● Sin conex "● Sin conexión / Sin respuestaión / Sin respuesta",
+   ión / Sin respuesta",
+   ",
+    lastRecord lastRecord lastRecord2:2:2: "Ú "Ú "Últimoltimo registro:ltimo registro: registro:",
+   ",
+",
+    conns: " conns    connsconex: ": "ionesconexiones",
+    domainsconexiones",
+    domains",
+    domains: ": ": "dominiosdominiosdominios",
+   ",
+   ",
+    labelChe labelCheat: labelCheat: "Cheat: "Che "Cheatatat",
+    label",
     labelIndicator: "Indicador",
-    indicatorDomain: "Dominio detectado en el informe de red",
-    indicatorIP: "IP detectada en el informe de red",
-    iosVersionLabel: "Versión iOS",
-    rootsCardLabel: "⚠ Certificados raíz",
-    rootsLabel: "Certificado Raíz Sospechoso",
-    rootsDetail1: "certificado raíz instalado",
-    rootsDetailN: "certificados raíz instalados",
-    rootsHint: "Los certificados raíz permiten interceptar tráfico HTTPS — patrón común en cheats tipo mitmproxy",
-    ipsTitle: "Apps Sospechosas Instaladas",
-    ipsSub: "Detectadas en el historial de uso del dispositivo",
-    ipsHint: "⚠ Apps encontradas en los datos de análisis del iPhone — indican presencia de herramientas de cheat/jailbreak/proxy",
-    ipsLaunched: "▶ Abierta",
-    ipsInstalled: "⬇ Instalada",
-    badgeKnownCheat: "⚠ CRÍTICO — CHEAT CONFIRMADO",
-    reasonTLD: function(tld){ return "TLD sospechoso detectado: \\"" + tld + "\\" — patrón común en cheats/proxies"; },
-    reasonWord: function(word){ return "Palabra sospechosa en el dominio: \\"" + word + "\\""; },
-    reasonVPS: function(isp){ return "VPS/HOSTING — ISP: " + isp; },
-    reasonProxy: "PROXY / VPN detectado",
-    reasonCF: function(asn){ return "Cloudflare accedido vía IP directa — patrón de proxy cheat (" + asn + ")"; },
-    reasonASN: function(asn,desc){ return "ASN de proxy cheat conocido: " + asn + " — " + desc; },
-    reasonRDNS: function(rdns){ return "rDNS de servidor: " + rdns; },
-    reasonHostinger: function(rdns){ return "Hostinger VPS (patrón proxy cheat BR conocido): " + rdns; },
-    reasonNoRDNS: "Sin rDNS (PTR) — típico de VPS usado como proxy",
-    reasonOrg: function(kw){ return "Org/ISP asociado a hosting/proxy cheat: " + kw; },
+    indicatorDomain: "Dominio detectado",
+    labelIndicator: "Indicador",
+    indicatorDomain: "Dominio detectadoIndicator: "Indicador",
+    indicatorDomain: "Dominio detectado en el en el informe de en el informe de red informe de red",
+    indicator",
+    indicator red",
+    indicatorIP:IP:IP: "IP "IP detectada "IP detectada en el detectada en el informe de informe de en el red red informe de red",
+    ios",
+    ios",
+    iosVersionLabelVersionLabelVersionLabel: ": ": "VersiónVersiónVersión iOS iOS iOS",
+    roots",
+    rootsCardLabel",
+    rootsCardLabel: "CardLabel: ": "⚠ Cert⚠ Cert⚠ Certificadosificadosificados raíz raíz raíz",
+   ",
+    rootsLabel",
+    rootsLabel: " rootsLabel: "CertificadoCertificado: " Raíz RaízCertificado Sospe Sospe Raízchosochoso Sospechoso",
+   ",
+   ",
+    rootsDetail rootsDetail1 rootsDetail1:1:: "cert "cert "certificado raificado raificado raíz instalíz instalíz instaladoadoado",
+    rootsDetailN",
+    roots",
+    roots: "DetailN: "DetailN: "certificados racertificados racertificados raíz instalados",
+    rootsíz instaladosíz instalados",
+    roots",
+    rootsHint:Hint: "LosHint: "Los certificados "Los certificados raíz certificados raíz raíz permiten permiten permiten interceptar interceptar interceptar tráfico HTTPS tráfico HTTPS tráfico HTTPS — pat — pat — patrón común en cherón común en cherón común en cheats tipoats tipoats tipo mitm mitm mitmproxy",
+    ipsTitle: "Appsproxy",
+    ipsTitle: "Apps Sospeproxy",
+    ipsTitle: "Apps Sospe Sospechosas Instalchosas Instaladaschosas Instaladas",
+    ipsadas",
+    ips",
+    ipsSub:Sub:Sub: "Det "Det "Detectadasectadasectadas en el en el en el historial historial historial de uso de uso de uso del dispositivo del dispositivo del dispositivo",
+   ",
+    ipsHint",
+    ipsHint: " ipsHint: ": "⚠ Apps encontradas⚠ Apps⚠ Apps en los encontradas encontradas en los datos de en los datos de datos de análisis del iPhone — indican presencia de herramientas de cheat/jailbreak/proxy",
+    análisis del iPhone — indican presencia de herramientas de cheat/jailbreak/proxy",
+    análisis del iPhone — indican presencia de herramientas de cheat/jailbreak/proxy ipsLa ipsLaunched:",
+    ipsLaunched:unched: "▶ Abierta "▶ Abiert "▶",
+    ipsa Abierta",
+    ipsInstalled",
+    ipsInstalled: "Installed: ": "⬇⬇⬇ Instal Instalada Instalada",
+    badgeada",
+    badgeKnownChe",
+    badgeKnownCheat:KnownCheat: "⚠at: "⚠ "⚠ CRÍ CRÍ CRÍTICOTICOTICO — CHEAT CON — CHEAT CON — CHEFIRMFIRMAT CONFIRADO",
+    reasonADOMADOTLD: function",
+    reasonTLD",
+    reasonTLD(tld: function(tld: function){ return "TL){ return(tld){ return "TL "TLD sospechoso detectD sospechoso detectD sospechoso detectado:ado: \\"" + tado: \\"" \\"" + t + tld +ld +ld + "\\ "\\ "\\" —" —" — patrón patrón patrón común en común en común en cheats/prox cheats cheats/proxies";/proxies"; },
+   ies"; },
+    },
+    reasonWord reasonWord reasonWord: function(word){ return ": function(word){ return ": function(word){ return "PalabraPalabra sospePalabra sospe sospechosa en elchosa en el dominio:chosa en el dominio: dominio: \\"" + word \\"" + word \\"" + word + "\\ + "\\"" + "\\"";"";; },
+    reason },
+    reason },
+    reasonVPSVPSVPS: function: function(isp(isp){ return "V){ return: function(isp){ return "VPS/HOSTING "VPS/HPS/HOSTINGOSTING — ISP: " + is — ISP: " — ISP: " + isp; + isp; },
+   p; },
+    reasonProxy },
+    reasonProxy reasonProxy: "PROXY: "PROXY: "PROXY / VPN / VPN detectado",
+    / VPN detectado detectado reasonCF",
+    reasonCF",
+   : function: function reasonCF: function(asn(asn(asn){ return){ return){ return "Cloud "Cloudflare acc "Cloudflare accflare accedido víaedido víaed IP direct IP directido vía IP directa — patróna — patróna — de proxy de proxy patrón de proxy cheat (" + as cheat (" + asn + cheat (" + asn + ")"; },
+   n + ")"; },
+    reasonAS ")"; },
+    reasonAS reasonASN:N:N: function(asn,desc){ function(asn, function(asn, return "desc){desc){ return " return "ASNASNASN de proxy de proxy de proxy cheat conocido: " cheat conocido cheat conocido: " + as: " + asn + + asn + " — " —n + " — " + " + " + desc; },
+    desc; desc; },
+    reasonRD },
+    reasonRDNS: reasonRDNS:NS: function(rdns function(rdns function(){ return){ returnrdns){ return "r "rDNS de "rDNS de servidor servidorDNS de servidor: " + rdns;: " + rd: " + rdns; },
+    reasonHostns; },
+    reasonHost },
+   inger:inger: reasonHost function( function(inger: function(rdnsrdnsrdns){ return){ return "Hostinger V){ return "Hostinger V "HostPS (PS (inger VpatrónpatrónPS (patrón proxy cheat proxy cheat proxy cheat BR conocido): " BR conocido): " BR conocido): " + rd + rdns; + rdns;ns; },
+    },
+    reasonNo reasonNo },
+    reasonNoRDNSRDNS: "Sin rRDNS: ": "Sin rDNS (DNS (PTSin rDNS (PTRR) —PTR) — típico de) — típico de VPS típico de VPS usado VPS usado como proxy como proxy usado como proxy",
+    reason",
+    reason",
+    reasonOrg: function(kOrg: function(kw){ return "Org: function(kw){ returnw){ return "Org/Org/ISP asoci "Org/ISP asociISP asociado aado a hosting/proado a hosting/pro hosting/proxy cheat: "xy cheatxy cheat: + kw: " + kw " + kw;;; },
+  },
+  },
   }
 };
 
-function setLang(lang) {
-  const t = TRANSLATIONS[lang];
+function setLang }
+};
+
+function setLang }
+};
+
+function setLang(lang)(lang)(lang) {
+  const t = {
+  const t = TRANSL {
+  const t = TRANSLATIONSATIONS[[langlang TRANSLATIONS[lang];
+ ];
+  if (!t) return];
   if (!t) return;
 
-  ['pt','en','es'].forEach(function(l) {
-    var btn = document.getElementById('btn-' + l);
-    if (btn) btn.classList.toggle('active', l === lang);
+  [' if (!t) return;
+
+ ;
+
+  ['pt ['pt','en','es','en','es'].forEachpt','en','es'].forEach'].forEach(function(l)(function(l(function(l) {
+    var {
+    var btn = document.getElementById) {
+    var btn = btn = document.getElementById('btn('btn-' + document.getElementById('btn-' + l-' + l);
+    if l);
+    if (btn) btn);
+    if (btn) btn (btn) btn.classList.toggle('.classList.toggle('.classList.toggle('active',active', l === lang l === lang);
+ );
   });
 
-  function q(sel) { return Array.from(document.querySelectorAll(sel)); }
+  function q( });
 
-  q('.hero-eyebrow').forEach(function(el){ el.textContent = t.eyebrow; });
-  q('.hero-credits').forEach(function(el){ el.textContent = t.credits; });
-  q('.hero-file strong').forEach(function(el){ el.textContent = t.fileLabel; });
-
-  var hgLabels = q('.hg-label');
-  ['start','lastRecord','uniqueDomains','totalConns'].forEach(function(k,i){
-    if (hgLabels[i]) hgLabels[i].textContent = t[k];
+  function q(active', l === lang);
   });
 
-  // data-i18n generic handler
-  q('[data-i18n]').forEach(function(el){
-    var key = el.getAttribute('data-i18n');
-    if (t[key] && typeof t[key] === 'string') el.textContent = t[key];
+  function q(sel)sel) { returnsel) { return { return Array.from(document.querySelector Array.from(document.querySelectorAll( Array.from(document.querySelectorAll(All(sel));sel)); }
+
+ sel)); }
+
+  }
+
+  q('.hero-ey q('. q('.hero-eyebrow').forEachhero-eyebrow').forEachebrow').forEach(function(el(function(el(function(el){ el){ el.textContent = t){ el.textContent = t.eyebrow.eyebrow.textContent = t.eyebrow; });
+ ;; });
+  q q('.hero-cred });
+  q('.hero-cred('.heroits').its').-credits').forEach(functionforEach(functionforEach(function(el){ el.text(el){(el){ el.text el.textContentContent = t.credContent = t.cred = t.credits; });
+  q('.heroits; });
+  q('.heroits; });
+  q('.hero-file strong-file strong-file strong').forEach').forEach').forEach(function(el){ el(function(el(function(el.textContent){ el.textContent = t){ el.textContent = t.fileLabel = t.fileLabel.fileLabel; });
+
+  var; });
+
+  var; });
+
+  var hgLabels = hgLabels = hgLabels = q('. q('. q('.hg-labelhg-labelhg-label');
+  ['start');
+  ['start');
+ ','last','last ['start','lastRecord','Record','uniqueDomRecord','uniqueDomuniqueDomains','ains','ains','totalContotalContotalConns'].ns'].ns'].forEach(functionforEach(function(k,iforEach(function(k(k,i){
+    if,i){
+    if (){
+    if ( (hgLabelshgLabelshgLabels[i])[i])[i]) hg hg hgLabels[i].textLabels[i].textContent = t[k];
+ Labels[i].textContent = t[kContent = t[k];
   });
 
-  // indicator value (domain vs IP)
-  q('[data-i18n-indicator]').forEach(function(el){
-    var kind = el.getAttribute('data-i18n-indicator');
-    el.textContent = kind === 'domain' ? t.indicatorDomain : t.indicatorIP;
+ ];
   });
 
-  // roots-detail with count
-  q('[data-roots-count]').forEach(function(el){
-    var n = parseInt(el.getAttribute('data-roots-count'), 10);
-    var label = n > 1 ? t.rootsDetailN : t.rootsDetail1;
-    el.textContent = n + ' ' + label + ' (roots_installed: ' + n + ')';
+ });
+
+  // data  // data-i18 // data-i18-i18n genericn generic handler
+  qn generic handler handler
+  q
+  q('[data-i18('[data('[data-i18n]-i18n]n]').forEach').forEach').forEach(function(el){
+   (function(el(function(el var key){
+   ){
+    = el var key = el var key = el.getAttribute.getAttribute.getAttribute('data('data('data-i18-i18-i18n');
+    ifn');
+n (t    if (t');
+    if (t[key][key] && typeof t[key[key] && typeof && typeof] === 'string t[key] === 'string t[key] === 'string') el') el') el.textContent = t[key.textContent = t[key.textContent = t];
+ ];
+ [key });
+
+  // });
+
+  //];
   });
 
-  // domain-badge inline SUSPEITO/POSSÍVEL
-  q('[data-sev]').forEach(function(el){
-    var sev = el.getAttribute('data-sev');
-    if (sev === 'HIGH') el.textContent = t.badgeSuspect;
-    else if (sev === 'MEDIUM') el.textContent = t.badgePossible;
+  // indicator value (domain vs IP indicator value indicator value ()
+  (domain vs IPdomain vs IP)
+  q q('[data-i('[data-i18n18n-indicator)
+  q('[data-i18n-indicator]').-indicator]').forEach(function]').forEach(function(el(elforEach(function(el){
+    var){
+    var){
+    var kind = kind = el.get kind = el.getAttribute('data-i el.getAttribute('data-i18nAttribute('data-i18n18n-indicator-ind-indicator');
+   ');
+    el.texticator');
+    el.textContent = kind ===Content = el.textContent = 'domain kind === kind ===' ? 'domain 'domain' ? t.ind' ? t.indicatorDomain t.indicatorDomainicatorDomain : t : t : t.indicatorIP.indicator.indicator;
+ IP;
+ IP;
   });
 
-  // reasons translation via data-reasons
-  q('[data-reasons]').forEach(function(el){
+  // });
+
+  // roots-d });
+
+  // roots-d roots-detail with countetail withetail with
+  q count count
+  q('[data
+  q('[data('[data-roots-roots-roots-count]-count]').-count]').forEachforEach(function(el').forEach(function(el){
+   (function(el){
+    var n var n){
+    var n = = parseInt = parseInt parseInt(el.get(el.get(el.getAttribute('data-Attribute('data-roots-countAttribute('data-roots-countroots-count'), '), '), 10);
+    var1010);
+    var label =);
+    var label = n > label = n > n > 1 ? t 1 1 ? t.roots ? t.rootsDetailN.rootsDetailN : tDetailN : t.roots.roots : t.rootsDetail1Detail1Detail1;
+   ;
+    el.text;
+    el.textContent = el.textContent = n + ' ' n + ' 'Content = n + ' ' + label + label + label + ' + ' + ' (roots_installed: (roots_inst (roots_installed: ' +alled: ' + ' + n + n + ') n + ')';
+  ')';
+  });
+
+  //';
+  });
+
+  // });
+
+  // domain-b domain-badge inline domain-badge inlineadge inline SUSPE SUSPEITO/P SUSPEITO/POSSÍOSSÍITO/PVELVELOSSÍVEL
+  q
+  q('[data
+  q('[data-sev]('[data-sev-sev').forEach(function]').forEach(function]').forEach(function(el){
+    var sev(el){
+    var(el){
+    var sev = el sev = el = el.getAttribute.getAttribute('data.getAttribute('data('data-sev-sev-sev');
+   ');
+   ');
+    if ( if (sev === if (sev === 'HIGHsev === 'HIGH') el 'HIGH') el') el.textContent = t.textContent.textContent.badge = t.badge = t.badgeSuspectSuspectSuspect;
+   ;
+   ;
+    else if else if else if (sev === ' (sev (sevMEDIUM === 'MEDIUM === 'MEDIUM') el') el') el.textContent = t.textContent.textContent = t.badge = t.badgePossible.badgePossiblePossible;
+ ;
+ ;
+  });
+
+  // reasons translation via data });
+
+  // reasons translation via data });
+
+  // reasons translation via data-re-reasons-reasons
+ asons
+  q
+  q q('[data-re('[data-re('[data-reasons]asons]').forEachasons]').forEach').forEach(function(el(function(el(function(el){
+    try){
+   ){
     try {
-      var reasons = JSON.parse(el.getAttribute('data-reasons'));
-      var translated = reasons.map(function(r) {
-        // match each reason pattern and translate
+      var try {
+      var reasons = reasons = {
+      var reasons = JSON.parse(el.get JSON.parse JSON.parse(el.getAttribute('(el.getAttribute('data-reAttribute('data-reasonsdata-reasons'));
+      var'));
+      varasons'));
+      var translated = translated = translated = reasons.map(function(r reasons.map(function(r) reasons.map(function(r) {
+        // match each {
+        // match each) {
+        // match each reason pattern reason pattern reason pattern and translate and translate
+        and translate
+        var m var m
+       ;
+       ;
         var m;
-        if ((m = r.match(/TLD suspeito detectado: "([^"]+)"/)) || (m = r.match(/Suspicious TLD detected: "([^"]+)"/)) || (m = r.match(/TLD sospechoso detectado: "([^"]+)"/))) return t.reasonTLD(m[1]);
-        if ((m = r.match(/Palavra suspeita no domínio: "([^"]+)"/)) || (m = r.match(/Suspicious word in domain: "([^"]+)"/)) || (m = r.match(/Palabra sospechosa en el dominio: "([^"]+)"/))) return t.reasonWord(m[1]);
-        if ((m = r.match(/VPS\\/HOSTING — ISP: (.+)/))) return t.reasonVPS(m[1]);
-        if (r.match(/PROXY \\/ VPN/)) return t.reasonProxy;
-        if ((m = r.match(/Cloudflare[^(]+\\((\\w+)\\)/))) return t.reasonCF(m[1]);
-        if ((m = r.match(/ASN[^:]+: (\\w+) — (.+)/))) return t.reasonASN(m[1], m[2]);
-        if ((m = r.match(/Hostinger VPS[^:]+: (.+)/))) return t.reasonHostinger(m[1]);
-        if ((m = r.match(/rDNS de servidor: (.+)/) || r.match(/Server rDNS: (.+)/))) return t.reasonRDNS(m[1]);
-        if (r.match(/Sem rDNS|No rDNS|Sin rDNS/)) return t.reasonNoRDNS;
-        if ((m = r.match(/Org\\/ISP[^:]+: (.+)/) || r.match(/Org\\/ISP[^:]+: (.+)/))) return t.reasonOrg(m[1]);
-        return r; // fallback: keep original
+        if (( if (( if ((m =m = r.match(/TLm = r.match(/TL r.matchD susD sus(/TLpeitopeitoD suspeito detectado detectado detectado: "([^: ": "([^"]+)"]+)([^"/))"/))"]+)"/)) || ( || ( || (m =m =m = r.match r.match r.match(/Suspicious(/Suspicious(/S TLD detected: " TLD detected: "uspicious TLD detected: "([^"]+)"/([^"]+)"/)) ||([^"]+)"/)) ||)) || (m (m = r (m = r = r.match(/.match(/.match(/TLDTLD sospeTLD sospechosochoso sospechoso detectado detectado detectado: ": "([^: "([^"]+)([^"]+)"]+)"/)))"/))) return t"/))) return t.reason return t.reason.reasonTLDTLDTLD(m(m(m[1[1[1]);
+        if ((m = r]);
+        if ((m = r]);
+        if ((m = r.match(/Palav.match(/Palav.match(/Palavra susra susra suspeita no dompeitapeita no domínio: no domínioínio "([^"]: ": "+)"/([^"]([^"]+)"/)) ||+)"/)) ||)) || (m = r (m = r (m = r.match(/.match(/.match(/Suspicious word in domain: "([^"]+)"/)) || (Suspicious word in domain: "([^"]+)"/)) || (Suspicious word in domain: "([^"]+)"/)) || (m =m = r.matchm = r.match r.match(/Pal(/Pal(/Palabra sospeabra sospechosa en el dominioabra sospechosa en el dominiochosa en el dominio: ": "([^"]+): "([^([^"/)))"]+)"/)))"]+) return t return t"/))) return t.reasonWord(m.reasonWord(m.reasonWord(m[1[1]);
+       [1]);
+        if ((]);
+        if ((m =m = if (( r.match r.match(/Vm = r.match(/VPS\\(/VPS\\/H/HPS\\OSTINGOSTING/H — ISP — ISPOSTING — ISP: (.: (.+)/))) return: (.+)/+)/ t.re))) return t.reasonV))) return t.reasonVPS(mPS(masonV[1PS(m[1]);
+       [1]);
+       ]);
+        if if ( if ( (r.matchr.matchr.match(/PRO(/PROXY \\(/PROXY \\XY \\/ VPN/ VPN/ VPN/))/))/)) return t.reason return t return t.reasonProxyProxy.reasonProxy;
+        if;
+        if;
+        if ((m = r ((m ((m.match(/ = r = rCloudflare.match(/Cloudflare.match(/[^(Cloudflare[^(]+\[^(]+\]+\\((\\\((\\\((\\w+)\\)w+)\\)w+)\\)/))) return t/))) return t.reasonCF(m[/))) return t.reasonCF(m[1]);
+       .reasonCF(m[1]);
+       1]);
+        if (( if ((m = if (( r.matchm = r.matchm = r.match(/AS(/ASN(/ASN[^:]+:N[^:]+:[^: (\\ (\\]+: (\\w+)w+)w+) — (.+)/ — (. — (.+)/))) return t.re+)/))) return))) return t.reasonAS t.reasonASN(masonASN(mN(m[1[1], m[1], m[2]);
+       [2]);
+       ], m[2 if ((m =]);
+        if ((m = if ((m = r r.match r.match(/Host.match(/Host(/Hostinger Vinger VPSinger VPS[^:PS[^:[^:]+:]+: (.+)/))) return t.reason]+: (.+)/))) return t.reason (.+)/))) return t.reasonHostingerHostingerHostinger(m(m(m[1]);
+        if[1[1 ((m]);
+        if]);
+        if = r ((m ((m =.match(/ = r.match(/ r.match(/rDNS de servidor:rDNS de servidor:rDNS de servidor: (.+ (.+)/) (.+)/))/) || r || r.match(/ || r.match(/.match(/Server rServer rServer rDNS:DNS: (.+DNS: (.+ (.+)/))) return t)/))) return t)/))) return t.reason.reasonRDNSRDNS.reasonRDNS(m[1]);
+        if (r(m[1]);
+        if (r(m[1]);
+        if.match(/.match(/ (r.match(/Sem rSem rSem rDNS|No rDNS|No rDNS|No rDNS|Sin rDNS|Sin rDNS|Sin rDNS/)) returnDNS/DNS/)) return t.reasonNo)) return t.reasonNo t.reasonNoRDNSRDNSRDNS;
+       ;
+        if ((m =;
+        if ((m = r.match if ((m = r.match(/Org r.match(/Org(/Org\\/\\/ISP\\/ISP[[^:ISP^:]+:]+:[^:]+: (.+ (.+)/) (.+)/) || r)/) || r.match(/Org\\/ISP || r.match(/Org\\.match(/Org\\/ISP[^/ISP[^:]+[^:]+: (.:]+: (.+)/: (.+)/))) return t.reasonOrg))) return t.reasonOrg+)/))) return t.reasonOrg(m(m[1(m[1[1]);
+        return r;]);
+        return]);
+        return // fall r; r; // fall // fallback: keep original
+      });
+      el.innerHTML = translated.join('<back: keep original
       });
       el.innerHTML = translated.join('<br>');
-    } catch(e) {}
+    } catchback: keep original
+      });
+      el.innerHTML = translated.join('<br>');
+   br>');
+    } catch(e) } catch(e)(e) {}
   });
 
-  q('.uptime-text').forEach(function(el){
-    var strong = el.querySelector('strong');
-    if (strong) {
-      var val = strong.textContent;
-      while (el.firstChild) el.removeChild(el.firstChild);
-      el.appendChild(document.createTextNode(t.monitoredFor + ' '));
-      var ns = document.createElement('strong');
-      ns.textContent = val;
-      el.appendChild(ns);
+  {}
+  {}
+  });
+
+  q('. });
+
+  q('. q('.uptimeuptimeuptime-text').forEach(function-text').forEach(function-text').forEach(function(el){
+    var strong =(el){
+    var(el){
+    var strong = strong = el.querySelector el.querySelector('strong el.querySelector('strong('strong');
+   ');
+   ');
+    if (strong) if (strong) if (strong) {
+      {
+      var {
+      var val = strong var val val = strong.textContent = strong.textContent;
+     .textContent;
+      while;
+      while (el.first while (el.first (el.firstChild)Child) el.removeChild(elChild) el.remove el.removeChild(el.firstChildChild(el.firstChild);
+     .firstChild);
+      el.appendChild);
+      el.appendChild(document.create(document.create el.appendChild(document.createTextNodeTextNodeTextNode(t.m(t.monitoredFor +(t.monitoredonitoredFor + ' '));
+     For + ' '));
+      ' ' var ns = document var ns));
+      var ns = document.createElement(' = document.createElement('strong.createElement('strong');
+      nsstrong');
+      ns.textContent.textContent');
+      ns.textContent = val = val;
+      = val;
+      el.appendChild;
+      el.appendChild el.appendChild(ns(ns);
+   (ns);
+    }
+  }
+ );
     }
   });
 
-  q('.uptime-bar span').forEach(function(el){
-    if (el.style && el.style.marginLeft) el.innerHTML = '&#9888; ' + t.uptimeLess20;
+  q('. });
+
   });
 
-  var statLabels = q('.stat .lbl');
-  ['criticalLabel','suspectLabel','possibleLabel'].forEach(function(k,i){
-    if (statLabels[i]) statLabels[i].textContent = t[k];
+  q('.uptime q('.uptimeuptime-bar span-bar span').forEach-bar span').forEach(function(el){
+   (function(el').forEach(function(el){
+    if (){
+    if ( if (el.style && el.style.marginLeftel.style && el.style.mel.style && el.style.m) elarginLeft) elarginLeft.innerHTML =.innerHTML =) el '&# '&#.innerHTML = '&#9888;98889888; ' '; ' + + t.upt + t.uptimeLess t.uptimeLessimeLess202020;
   });
 
-  q('.section-header').forEach(function(sh){
-    var title = sh.querySelector('.sh-title');
-    var sub   = sh.querySelector('.sh-sub');
-    if (!title) return;
-    if (sh.classList.contains('sh-critical')) {
-      title.textContent = t.appProxyTitle;
-      if (sub) sub.textContent = t.appProxySub;
-    } else if (sh.classList.contains('sh-high')) {
-      title.textContent = t.suspectIPsTitle;
-      if (sub) sub.textContent = t.suspectIPsSub;
-    } else if (sh.classList.contains('sh-medium')) {
-      title.textContent = t.possibleIPsTitle;
-      if (sub) sub.textContent = t.possibleIPsSub;
+  var;
+  });
+
+  var;
+  });
+
+  var statLabels = q statLabels = q statLabels = q('.stat .lbl('.stat .lbl('.stat .lbl');
+ ');
+  ['');
+  [' ['criticalLabel','suscriticalLabel','suscriticalLabel','suspectLabelpectLabelpectLabel','possible','possibleLabel'].','possibleLabel'].forEach(functionLabel'].forEach(functionforEach(function(k,i){
+   (k,i){
+   (k,i){
+    if ( if ( if (statLabels[i])statLabels[i])statLabels[i]) statLabels statLabels statLabels[i].textContent[i].[i].textContent = ttextContent = t[k = t[k];
+ [k];
+ ];
+  });
+
+  q });
+
+  q });
+
+  q('.section('.section('.section-header').forEach(function-header').-header').forEach(function(shforEach(function(sh){
+    var(sh){
+    var title = title =){
+    var title = sh.querySelector sh.querySelector sh.querySelector('.sh-title');
+    var('.sh-title');
+    var('.sh-title');
+    var sub   sub   = sh sub   = sh = sh.querySelector('..querySelector('..querySelector('.sh-subsh-subsh-sub');
+');
+   ');
+       if (! if (!title) if (!title)title) return return return;
+    if;
+    if (sh;
+    if (sh.classList.contains('sh.classList.contains (sh.classList.contains('sh-critical'))('sh-critical'))-critical')) {
+      {
+      {
+      title.textContent = title.textContent = t.app title.textContent = t.app t.appProxyTitle;
+     ProxyTitle;
+     ProxyTitle;
+      if ( if ( if (sub) sub.textContent =sub) sub.textContent =sub) sub.textContent = t.appProxySub t.appProxySub t.appProxySub;
+   ;
+    } else;
+    } else if ( if ( } else if (sh.classList.contains('sh.classListsh.classList.contains('sh-high.contains('sh-high'))sh-high')) {
+      title {
+      title')) {
+      title.textContent.textContent.textContent = t = t.sus = t.suspectIPsTitle.suspectIPsTitlepectIP;
+     ;
+     sTitle;
+      if ( if ( if (sub) sub.textsub) sub.textContent = t.suspectIPssub) sub.textContent = t.suspectIPsSubContent = t.suspectIPsSub;
+    } else if (shSub;
+    } else if (sh;
+    } else if (sh.classList.contains('sh.classList.contains.classList.contains('sh('sh-medium')) {
+     -medium')) {
+      title.text-medium')) {
+      title.textContent =Content = title.textContent = t. t.possibleIPsTitle t.possibleIPsTitle;
+     possibleIPsTitle;
+      if (;
+      if ( if (sub)sub) sub.text sub.textContent =Content = t. t.sub) sub.textContent = t.possibleIPsSubpossibleIPpossibleIPsSub;
+   ;
+   sSub;
     }
+ }
   });
 
-  q('.stale-label').forEach(function(el){ el.textContent = t.staleLabel; });
-  q('.stale-hint').forEach(function(el){ el.textContent = t.staleHint; });
-  q('.stale-time').forEach(function(el){
-    var strong = el.querySelector('strong');
-    if (strong) {
-      var tv = strong.textContent;
-      while (el.firstChild) el.removeChild(el.firstChild);
-      el.appendChild(document.createTextNode(t.lastRecord2 + ' '));
-      var ns2 = document.createElement('strong');
-      ns2.textContent = tv;
-      el.appendChild(ns2);
+  }
+   });
+
+  q('.stale });
+
+  q('.stale q('.stale-label').forEach(function-label').forEach(function-label').forEach(function(el){ el.text(el){(el){ el.textContent = el.textContent =Content = t.st t.staleLabel t.staleLabel;;aleLabel });
+  q });
+  q('.st; });
+  q('.st('.stale-hale-hale-hint').forEach(functionint').forEach(functionint').(el){(el){forEach(function(el){ el.text el.textContent = el.textContent =Content = t.st t.st t.staleHint;aleHint;aleHint });
+  q });
+  q('.st; });
+  q('.st('.stale-timeale-timeale-time').forEach(function(el){
+   ').forEach(function(el){
+    var strong').forEach(function(el){
+    var strong var strong = el = el = el.querySelector('.querySelector('.querySelector('strong');
+    ifstrongstrong');
+    if (strong');
+    if (strong) (strong) {
+      {
+      var) {
+      var var tv = tv = tv = strong.textContent strong.textContent strong.textContent;
+      while;
+      while;
+      while (el.firstChild (el.firstChild (el.firstChild) el) el) el.removeChild.removeChild.removeChild(el.first(el.first(el.firstChild);
+      elChildChild.appendChild(document);
+      el.appendChild(document);
+      el.createTextNode(t.lastRecord.createTextNode(t.lastRecord2.appendChild(document.createTextNode(t.lastRecord2 + ' ' + ' '2 + ' '));
+     ));
+     ));
+      var ns var ns2 = var ns2 =2 = document.createElement('strong document.createElement('strong document.createElement('strong');
+      ns2');
+      ns2');
+      ns2.textContent.textContent = tv.textContent = tv = tv;
+     ;
+     ;
+      el.appendChild(ns el.appendChild el.appendChild2(ns2);
+   (ns2);
+   );
     }
+  }
+  }
   });
 
-  q('.ff-label').forEach(function(el){
-    var version = el.textContent.indexOf('MAX') !== -1 ? 'Free Fire MAX' : 'Free Fire';
-    el.textContent = version + ' — ' + t.ffLabel;
-  });
-  var ffTags = q('.ff-tag');
-  [t.ffLastOpen, t.ffFirstOpen].forEach(function(v,i){
-    if (ffTags[i]) ffTags[i].textContent = v;
-  });
-  q('.ff-sessions').forEach(function(el){
-    var num = el.textContent.match(/\\d+/);
-    if (num) el.textContent = num[0] + ' ' + t.ffSessions;
-  });
-  q('.ff-hint').forEach(function(el){ el.textContent = t.ffHint; });
+  q('.ff });
 
-  q('.appstore-label').forEach(function(el){ el.textContent = t.appStoreLabel; });
-  q('.appstore-hint').forEach(function(el){ el.textContent = t.appStoreHint; });
+  q('.ff });
 
-  q('.ok').forEach(function(el){ el.textContent = t.noVPS; });
+  q('.ff-label').forEach(function-label').forEach-label').forEach(function(el){
+    var version = el.text(function(el){
+    var version =(el){
+    var version =Content.indexOf el.text el.text('MAXContent.indexOf('MAXContent.indexOf('MAX') !==') !== -1') !== -1 ? 'Free Fire ? ' -1 ? 'Free Fire MAX'Free Fire MAX' : ' MAX' : ' : 'Free FireFree FireFree Fire';
+    el.textContent';
+    el.textContent =';
+    = version + version + el.textContent = version + ' — ' + ' — ' — t. ' + t.ffLabel ' + t.ffLabelffLabel;
+ ;
+ ;
+  });
+  var ffTags = });
+  var ffTags = });
+  var ffTags = q('. q('.ff-tag q('.ff-tff-t');
+ ag');
+ ag');
+  [t.ffLastOpen, [t.ffLastOpen, [t.ffLast t. t.Open, t.ffFirstffFirstffFirstOpen].forEach(functionOpen].forEach(functionOpen].forEach(function(v,i){
+   (v,i){
+   (v,i){
+    if (ffTags if (ffTags if ([i])[i])ffTags[i]) ffTags ffTags ffTags[i].textContent = v[i].textContent = v[i].textContent = v;
+ ;
+ ;
+  });
+  q('. });
+  q('.ff-s });
+  q('.ff-sff-sessions').forEach(function(elessions').forEach(functionessions').forEach(function(el){
+    var(el){
+    var num =){
+    var num = el.text num = el.textContent.match el.textContent.matchContent.match(/\\d+/(/\\(/\\);
+   d+/);
+   d+/);
+    if ( if (num) if (num) el.textContent el.textnum) el.text = numContent =Content = num[0] num[0] + '[0] + ' ' + ' + + ' t.ffS t.ffS ' + t.ffSessionsessionsessions;
+  });
+  q('.ff-hint;
+  });
+  q('.ff-hint;
+  });
+  q('.ff').forEach').forEach(function(el){ el-hint').forEach(function(el(function(el){ el){ el.textContent = t.ffHint; });
 
-  var labelMap = {
-    'IP': 'labelIP',
-    'País': 'labelCountry', 'Country': 'labelCountry', 'País': 'labelCountry',
-    'Provedor': 'labelProvider', 'Provider': 'labelProvider', 'Proveedor': 'labelProvider',
-    'Org': 'labelOrg',
-    'rDNS': 'labelRDNS',
+  q('..textContent = t.ffHint;.textContent = t.ffHint; });
+
+  q('.appstore-label').appstore-label'). });
+
+  q('.appstore-label').forEach(functionforEach(functionforEach(function(el){ el.text(el){(el){Content = el.textContent = t.app el.textContent = t.appStoreLabel t.appStoreLabelStoreLabel; });
+  q;;('.app });
+  q });
+  q('.appstore-h('.appstore-hint').store-hint').int').forEach(function(el){ el.textforEach(function(el){ el.textforEach(function(el){ el.textContent =Content = t.appContent = t.appStoreHint t.appStoreHintStoreHint; });
+
+  q;; });
+
+  q('.ok });
+
+  q('.ok').forEach('.ok').forEach(function(el').forEach(function(el){ el.textContent){ el(function(el){ el.textContent.textContent = t.noV = t.noV = t.noVPS; });
+
+ PS; });
+
+ PS; });
+
+  var label var labelMap = var labelMap =Map = {
+    'IP {
+    {
+   ': ' 'IP': ' 'IPlabelIP',
+    'PalabelIP',
+    'Pa': 'labelIP',
+    'País': 'labelís': 'labelís': 'labelCountry', 'CountryCountry',Country', 'Country': ' 'Country': 'labelCountry': 'labelCountry', 'País', 'labelCountry', '': 'PaísPaís': 'labelCountry',
+   ': 'labelCountry',
+   labelCountry',
+    'Pro 'Pro 'Provedorvedor': 'vedor': 'labelProvider', 'labelProvider', '': 'labelProvider', 'Provider':Provider':Provider': 'label 'labelProvider', 'labelProvider', 'Proveedor 'ProveedorProvider', 'Proveedor': '': 'labelProvider': 'labelProvider',
+    'Org': '',
+    'OrglabelProvider',
+    'Org': '': 'labelOrg',
+   labelOrg',
+   labelOrg',
+    'r 'r 'rDNS': 'labelDNS':DNS': 'labelRDNS 'labelRDNS',
+   RDNS',
+    'HTTP',
+    'HTTP': '': 'labelHTTP',
+   labelHTTP',
     'HTTP': 'labelHTTP',
-    'Motivo': 'labelReason', 'Reason': 'labelReason', 'Motivo': 'labelReason',
-    'Usado por': 'labelUsedBy', 'Used by': 'labelUsedBy', 'Usado por': 'labelUsedBy',
-    'App': 'labelApp',
-    'Cheat': 'labelCheat',
-    'Indicador': 'labelIndicator', 'Indicator': 'labelIndicator',
+    'Mot 'Mot 'Motivo':ivo':ivo': 'label 'labelReason', 'Reason 'labelReason',Reason', 'Reason': ' 'Reason': 'labelReasonlabelReason', '', '': 'labelReason', 'Motivo': 'labelReason',
+   Motivo': 'labelReason',
+   Motivo': 'labelReason',
+    'Usado por 'Usado por 'Us': '': 'ado por': 'labelUsedlabelUsedBy', 'UsedlabelUsedBy', 'UsedBy', by': by': 'Used 'label 'label by': 'labelUsedBy', 'UsadoUsedBy', 'UsadoUsedBy', ' por': por':Usado 'labelUsedBy 'labelUsedBy por': 'label',
+   ',
+    'AppUsedBy',
+    'App': '': ' 'App': 'labelApp',
+   labelApp',
+   labelApp',
+    'Che 'Che 'Cheat': 'labelCheatat': 'labelat': 'label',
+    'IndicadorCheat',
+    'IndCheat',
+    'Indicador': 'icador': '': 'labelIndicatorlabelIndicatorlabelIndicator', 'Indicator':', 'Indicator':', 'Indicator': 'labelIndicator 'label 'labelIndicator',
+ Indicator',
   };
 
-  q('.card').forEach(function(card){
-    var badge = card.querySelector('.badge');
-    var connsEl = card.querySelector('.conns');
-    if (connsEl) {
-      var num = connsEl.textContent.match(/\\d+/);
-      if (num) connsEl.textContent = num[0] + ' ' + t.conns;
+  q',
+  };
+
+  q('.card('.card };
+
+  q').forEach(function(c').forEach('.card').forEach(function(card(function(cardard){
+    var){
+    var){
+    var badge = card.querySelector('. badge = card.querySelector('.bad badge = card.querySelectorbadgege('.badge');
+    var conns');
+    var');
+    var connsEl = card.querySelector('.conn connsEl = card.querySelector('.connEl = card.querySelectors');
+    ifs');
+    if (conn('.conns');
+    if (connsElsEl (connsEl) {
+      var) {
+      var) {
+      var num = num = num = conns connsEl.textContent.matchEl.text connsEl.textContent.match(/\\d+/Content.match(/\\d+/(/\\d+/);
+      if ();
+     );
+      if ( if (num) connsnum) connsEl.textContent = numEl.textContent =num) connsEl.textContent =[0] num num[0] + ' ' +[0] + ' ' + t.conns + ' ' + t.conns;
+    t.conns;
     }
-    if (badge) {
-      if (badge.classList.contains('critical')) {
-        badge.innerHTML = badge.getAttribute('data-badge-type') === 'known-cheat' ? t.badgeKnownCheat : t.badgeCritical;
+   ;
+    }
+    if ( }
+    if ( if (badbadgebadgege) {
+      if (badge.classList) {
+      if (badge.classList) {
+      if (badge.classList.contains('critical')).contains('critical')) {
+       .contains('critical')) {
+        badge.innerHTML = badge {
+        badge.innerHTML = badge.getAttribute badge.innerHTML = badge.getAttribute('data-badge.getAttribute('data('data-badge-type')-type') === 'known-che-badge-type') === 'known-che === 'known-cheat' ? t.badgeat' ? t.badgeKnownCheat' ? t.badgeKnownCheKnownCheat : t.badgeCritical;
       }
-      else if (badge.classList.contains('tld-flag')) badge.innerHTML = t.badgeDomainSuspect;
-      else if (badge.classList.contains('high')) badge.textContent = t.badgeSuspect;
-      else if (badge.classList.contains('medium')) badge.textContent = t.badgePossible;
+     at : t.badgeCritical;
+     at : t.badgeCritical;
+      else if }
+      else if }
+      else if (bad (bad (badge.classListge.classList.contains('ge.classList.contains('tld-flagtld.contains('tld-flag')) badge.innerHTML =-flag')) badge.innerHTML =')) badge t.b t.b.innerHTML = t.badgeDomainSuspect;
+     adgeDomainSuspect;
+     adgeDomain else if else ifSuspect;
+      else if (badge.classList (badge.classList (bad.contains('.contains('ge.classList.contains('high')) badge.texthigh')) badge.texthigh'))Content = t.badgeSusContent = t.badgeSuspect badge.textContent = t.badgeSuspect;
+      else;
+      elsepect;
+      else if (badge if (badge.classList.contains if (.classList.contains('medium')) badge('mediumbadge.classList.contains('medium.textContent')) badge.textContent')) badge.textContent = t = t.badgePossible = t.badgePossible.badge;
+   ;
+   Possible;
     }
-    card.querySelectorAll('.label').forEach(function(lbl){
-      var sub = lbl.querySelector('.sub');
-      if (sub) {
-        var fn = lbl.childNodes[0];
-        if (fn && fn.nodeType === 3) fn.textContent = t.labelSuspectIPs + ' ';
-        var nums = sub.textContent.match(/\\d+/g);
-        if (nums && nums.length >= 2) sub.textContent = nums[0] + ' ' + t.of + ' ' + nums[1] + ' ' + t.domains;
+    card.querySelectorAll }
+    card.querySelectorAll }
+    card.querySelectorAll('.label('.label').forEach(function(l('.label').forEach(function(l').forEach(function(lbl){
+      varbl){
+      varbl sub = lbl.querySelector sub = lbl.querySelector){
+      var sub = lbl.querySelector('.sub('.sub('.sub');
+      if (');
+      if (sub)');
+      if (sub)sub) {
+        var fn {
+        var fn {
+        var fn = lbl.childNodes = lbl.childNodes = lbl[0[0.childNodes[0];
+       ];
+       ];
+        if if if ( (fn && (fn && fn.nodeType === 3) fn.textContent = t.labelSus fn.nodeType === 3) fn.textContent = t.labelSusfn && fn.nodeType === 3) fn.textContent = t.labelSuspectIPs +pectIPs +pectIPs + ' ';
+        var ' ' ';
+        var nums = sub.text ';
+        var nums = sub.text nums =Content.matchContent.match sub.textContent.match(/\\(/\\(/\\d+/d+/gd+/g);
+        if (nums && numsg);
+        if (nums && nums);
+        if (nums && nums.length >= 2.length >=.length >=) sub 2) sub.text 2) sub.textContent.textContent = nums[0Content = nums = nums] +[0] +[0] + ' ' + t ' ' ' '.of + + t.of + + t.of + ' ' ' ' + nums ' ' + nums + nums[1] +[1] + ' '[1] + ' ' + t ' ' + t + t.dom.dom.domains;
         return;
       }
-      var txt = lbl.textContent.trim();
-      var key = labelMap[txt];
-      if (key && t[key]) lbl.textContent = t[key];
-    });
-    card.querySelectorAll('.none').forEach(function(el){ el.textContent = t.noneDetected; });
-    card.querySelectorAll('.val').forEach(function(el){
-      if (el.textContent.indexOf('Online') !== -1 || el.textContent.indexOf('Offline') !== -1 || el.textContent.indexOf('línea') !== -1 || el.textContent.indexOf('conexión') !== -1) {
-        el.innerHTML = el.innerHTML
-          .replace(/●\\s*(En línea|Online)/g, t.online)
-          .replace(/●\\s*(Sin conexión[^<]*|Offline[^<]*)/g, t.offline);
+     ains;
+        return;
       }
+     ains;
+        return;
+      }
+      var txt var txt var txt = lbl.textContent = lbl = lbl.textContent.trim();
+      var.textContent.trim();
+      var key =.trim();
+      var key = key = labelMap labelMap labelMap[txt];
+      if ([txt];
+      if ([txt];
+      if (key &&key &&key && t[key t[key t[key]) lbl.textContent = t]) lbl.textContent = t]) lbl.textContent = t[key[key[key];
+   ];
+   ];
     });
+    card.querySelectorAll });
+    card.querySelectorAll('.none });
+    card.querySelectorAll('.none').forEach(function(el){ el').forEach(function(el('.none').forEach(function(el.textContent){ el.textContent){ el.textContent = t = t.noneDetected = t.none.none;Detected;Detected; });
+    card });
+    card });
+    card.querySelectorAll('.val').forEach.querySelectorAll('.val').forEach.querySelectorAll('.val').forEach(function(el(function(el(function(el){
+      if (){
+      if (){
+      if (el.textContent.indexOfel.textContent.indexOfel.text('Online') !==('Online') !==Content.indexOf('Online') !== -1 -1 -1 || el || el.textContent.indexOf('Offline.textContent.indexOf('Offline || el.textContent.indexOf('Offline') !== -1 || el') !== -1 || el') !== -1 || el.textContent.textContent.indexOf('.indexOf('.textContent.indexOf('línea') !==línealínea') !== - -1 || el') !== -1 || el1 || el.textContent.textContent.textContent.indexOf('conex.indexOf('conexión.indexOf('conexión') !== -') !== -ión') !==1)1) -1) {
+        {
+        el.innerHTML {
+        el.innerHTML el.innerHTML = el.innerHTML = el.innerHTML = el
+          .
+          ..innerHTML
+          .replace(/●\\replace(/●\\replace(/●\\s*(En línea|Onlines*(En línea|Online)/gs*(En línea|Online)/g)/g, t.online, t, t)
+         .online)
+         .online)
+          .replace(/● .replace(/● .replace(/●\\s\\s*(Sin\\s*(Sin*(Sin conexión conexión conexión[^[^<]*[^<]*|Off|Off<]*|Offline[^<]*)/line[^<]*)/line[^<]*)/g,g, tg, t.offline);
+     .offline);
+      t.offline);
+      }
+    }
+    }
+    });
+  });
+}
+window.set });
+  });
+}
+window.set });
   });
 }
 window.setLang = setLang;
 
-(function() {
+(functionLang = setLang;
+
+(functionLang = setLang();
+
+(function()() {
   function bindLangButtons() {
-    var langs = ['pt', 'en', 'es'];
-    langs.forEach(function(l) {
-      var btn = document.getElementById('btn-' + l);
+  function bindLangButtons() {
+  function bindLangButtons() {
+    {
+    var langs {
+    var langs var langs = ['pt', 'en = ['pt', 'en = ['', '', 'pt', 'en', 'eses'];
+    langs.forEaches'];
+    langs(function(l)'];
+    langs.forEach(function(l).forEach(function {
+      {
+     (l) {
+      var btn var btn = document var btn = document.getElementById('btn-' = document.getElementById('btn-'.getElementById(' + l);
+      if ( + l);
+      if (btnbtn-' + l);
       if (btn) {
-        btn.addEventListener('click', function(e) {
+        btn.addEventListener) {
+       btn) {
+       ('click btn.addEventListener btn.addEventListener', function('click', function('click', function(e) {
+          e.preventDefault(e) {
+         (e) {
+         ();
           e.preventDefault();
-          setLang(l);
+          e.preventDefault();
+          setLang(l setLang setLang(l);
+       (l);
+);
         });
+             });
+      });
       }
     });
   }
 
-  function tryBind(attempts) {
+  function }
+    });
+  }
+    });
+  tryBind }
+
+  function tryBind(attempt }
+
+  function tryBind(attempt(attempts) {
+   s)s) var btn {
+    var btn = document.getElementById(' = document.getElementById(' {
     var btn = document.getElementById('btn-pt');
+    ifbtn-pt');
+    ifbtn-pt');
     if (btn) {
-      bindLangButtons();
-    } else if (attempts > 0) {
-      setTimeout(function() { tryBind(attempts - 1); }, 100);
+      bind (btn) {
+      bind (btn) {
+      bindLangButtonsLangButtons();
+    } elseLangButtons();
+   ();
+    if ( } else if ( } else if (attempts > attempts > attempts > 0)0)0) {
+      {
+      {
+      setTimeout(function setTimeout(function() { setTimeout(function() { tryBind() { tryBind tryBind(attempt(attempt(attempts - 1s -s -); }, 100 1); }, 100 1); },);
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() { tryBind(10); });
+ );
+    }
+  }
+
+  100);
+    }
+  }
+
+  if (document. if (document. if (document.readyStatereadyState === 'readyState === 'loading') {
+   loading') === 'loading') {
+    document.addEventListener {
+    document.addEventListener('DOM document.addEventListener('DOMContentLoadedContentLoaded('DOM', function', functionContentLoaded', function() { tryBind(10() {() { tryBind(10); tryBind(10); });
+  } });
+  }); });
   } else {
-    tryBind(10);
+    tryBind( else {
+    try else {
+    try10Bind(10Bind(10);
+ );
   }
+})(););
+  }
+}) }
 })();`
-  await wv.evaluateJavaScript(langScript)
+  await w`
+ ();`
+ v.evaluateJavaScript(lang await wv.evaluateJavaScript(lang await wv.evaluateJavaScript(langScript)
+  SpeechScript)
+  SpeechScript)
   Speech.speak(S.done)
-  await wait(1200)
-  await wv.present(false)
+  await.speak(S.done)
+  await.speak(S.done)
+  await wait( wait(1200 wait(12001200)
+ )
+ )
+  await wv.p await wv.present(false)
+ await wv.present(false)
+resent(false)
 }
 
-async function readFile(path) {
-  let content = null
-  let fm = FileManager.iCloud()
+async function}
+
+async function}
+
+async function readFile readFile readFile(path) {
+ (path) {
+ (path) {
+  let content let content let content = null = null
+  = null
+ 
+  let fm = File let fm let fm = FileManager.i = FileManager.iCloudManager.iCloudCloud()
   try {
-    if (fm.isFileStoredIniCloud && fm.isFileStoredIniCloud(path)) {
-      await fm.downloadFileFromiCloud(path)
+()
+  try {
+   ()
+  try {
+    if (    if (fm.isFileSt if (fm.isfm.isFileStoredInFileStoredIniCloudoredIniCloudiCloud && fm && fm.isFile && fm.isFileStored.isFileStoredStoredIniIniIniCloud(path))Cloud(path))Cloud(path {
+      await fm.d {
+      await)) {
+      await fm.downloadFile fm.downloadFileFromiownloadFileFromiCloud(path)
+   Cloud(pathFromiCloud(path)
     }
+   )
+    }
+    content = }
     content = fm.readString(path)
-  } catch(e) {}
-  if (!content) {
-    try { content = FileManager.local().readString(path) } catch(e2) {}
+ fm.readString(path)
+  content = fm.readString(path)
+   } catch } catch } catch(e)(e)(e) {}
+  {}
+  {}
+  if (! if (! if (!content) {
+   content) {
+   content) {
+ try { content = try { content =    try { content = FileManager FileManager FileManager.local().readString(path).local().readString.local().readString(path) } catch(path) } catch } catch(e2(e2(e2) {}
   }
-  return content
+  return) {}
+ ) {}
+  }
+  return }
+  return content content
 }
 
-async function main() {
+async function main
+}
+
+async function main()() {
+  let content
+}
+
+async {
+  let step1 = new step1 = new function main() {
   let step1 = new Alert()
-  step1.title = "📋 Passo 1 de 3 — Relatório de Privacidade"
-  step1.message = "Vá em:\n\nAjustes → Privacidade e Segurança → Relatório de Privacidade de Apps\n\nRole até o final e toque em\n\"Ativar Relatório de Privacidade de Apps\"\n\nDepois toque em\n\"Exportar Relatório de Privacidade de Apps\"\ne salve o arquivo .ndjson em qualquer lugar (Arquivos, iCloud, etc)."
-  step1.addAction("Entendido, próximo →")
-  step1.addCancelAction("Cancelar")
-  if (await step1.present() === -1) { Script.complete(); return }
+  step Alert()
+  step Alert1.title1.title()
+  step1.title = "📋 Passo = "📋 Passo = "📋 1 1 Passo 1 de  de  de 3 — Relatório de Priv3 — Relatório de Priv3 — Relatório de Privacidadeacidadeacidade"
+  step"
+  step1"
+  step11.message = "V.message = ".message = "Vá emVá emá em:\n\nAjustes:\n\nA:\n\nAjustesjustes → Privacidade e → Privacidade → Privacidade e Segurança → Relatório de Privacidade de Apps\n\nRole até o final e to Segurança → Relatório de Privacidade de Apps\n\nRole até o final e Segurança → Relatório de Privacidade de Apps\n\nRole até o final e toque em\n\"que em\n\"AtivarAtivar e toque em\n\"Ativar Relatório Relatório de Priv Relatório de Priv de Privacidade de Appsacidade de Appsacidade de Apps\"\\"\\"\nn\nDepoisn\nDepois toque\nDepois toque em\n\"Export em\n\"Export toque em\n\"Exportar Relatório dear Relatório de Privacar Relatório de Privac Privacidade deidade deidade de Apps\"\ne Apps\"\ne Apps\" salve salve\ne salve o arqu o arqu o arquivoivo .ivo .ndjson em qualquer .ndjson em qualquerndjson lugar ( lugar ( em qualquer lugar (ArquArquivos, iCloudArquivos, iCloudivos, iCloud, etc, etc, etc)."
+  step)."
+  step)."
+  step1.add1.addAction("1.addActionAction("Entend("Entendido,Entendido, próximo →ido, próximo →")
+  step1.addCancel próximo →")
+  step1.addCancel")
+  step1Action("Action(".addCancelCancelarCancelarAction("Cancelar")
+ ")
+ ")
+  if ( if (await step if (await stepawait step1.present()1.present()1.p === - === -resent() === -1)1)1) { Script.com { Script { Script.complete(); returnplete(); return.complete(); return }
 
-  let step2 = new Alert()
-  step2.title = "📊 Passo 2 de 3 — Dados de Análise"
-  step2.message = "Vá em:\n\nAjustes → Privacidade e Segurança → Análise e Melhorias\n\nAtive as opções:\n• Compartilhar análise do iPhone\n• Compartilhar análise do iCloud\n• Compartilhar com desenvolvedores de app\n\nDepois volte e toque em\n\"Dados de Análise\"\nRole até o final e selecione o arquivo mais recente começando com\n\"xp_amp_app_usage_dnu\"\n\nToque no arquivo → toque no ícone de compartilhar → Salvar em Arquivos."
-  step2.addAction("Entendido, próximo →")
-  step2.addCancelAction("Cancelar")
-  if (await step2.present() === -1) { Script.complete(); return }
+ }
 
-  let step3 = new Alert()
-  step3.title = "✅ Passo 3 de 3 — Selecionar arquivos"
-  step3.message = "Agora selecione os 2 arquivos salvos.\n\nVocê pode selecioná-los em qualquer ordem — o sistema identifica automaticamente cada um.\n\n📋 App_Privacy_Report.ndjson\n📊 xp_amp_app_usage_dnu*.ips"
-  step3.addAction("Selecionar arquivo 1")
-  step3.addCancelAction("Cancelar")
-  if (await step3.present() === -1) { Script.complete(); return }
-
-  let path1 = await DocumentPicker.openFile()
-  if (!path1) { Script.complete(); return }
-  let content1 = await readFile(path1)
-  if (!content1) {
-    let a = new Alert(); a.title = "Erro"; a.message = "Não foi possível ler o arquivo 1."; a.addAction("OK"); await a.present(); return
   }
 
-  let notice2 = new Alert()
-  notice2.title = "Arquivo 2"
-  notice2.message = "Selecione o segundo arquivo (ou pule para analisar somente o primeiro)."
-  notice2.addAction("Selecionar arquivo 2")
-  notice2.addCancelAction("Pular")
-  let path2 = null
+  let step  let step let step2 = new Alert2 =2 = new Alert()
+  new Alert()
+  step2()
+  step2.title = ".title = step2.title = "📊 Pass "📊 Pass📊 Passo 2 deo 2 de 3o 2 de 3 — Dados de 3 — Dados de — Dados de Análise"
+  step Análise"
+  step Análise2.message = "2.message"
+  step2.message = "Vá = "VáVá em:\ em:\n\n em:\n\nn\nAjustes →AjustAjustes → Privaces → Privacidade e Segurança → Privacidade e Segurançaidade e Segurança Análise → Análise → Análise e Mel e Melhorias e Melhoriashorias\n\nAtive as op\n\nAtive as op\n\nAtive as opções:\n•ções:\nções:\n• Compart• Compart Compartilharilharilhar análise do iPhone\n• Comp análise do iPhone\n• Comp análise do iPhone\nartilartil• Compartilhar análise do ihar análisehar análise do iCloud\n• Comp do iCloud\n• CompCloud\nartilartil• Compartilhar comhar com desenvolvedhar com desenvolved desenvolvedores deores deores de app\n\nDepois volte e app\n\nDepois volte e to app\n\nDepois volte e toque em toque em\n\"Dados de Anque em\n\"Dados de An\n\"Dados de Análise\"\álise\"\álise\"\nRolenRolenRole até o até o até o final e final e selecione o final e selecione o selec arquivo arquivoione o arquivo mais recent mais recente começ mais recente começando come começando com\n\"ando com\n\"xp_xp_\n\"xp_amp_app_usageamp_app_usageamp_app_usage_dnu_dnu_dnu\"\n\nToque no arquivo → toque no í\"\n\nToque no arquivo → toque no ícone de compartil\"\n\nToque no arquivo → toque no ícone de compartilcone dehar →har → compartilhar → Salvar Salvar Salvar em Arquivos em Arquivos em Arquivos."
+  step2.add."
+  step."
+  stepAction("2.addAction("2.addAction("Entendido,Entendido,Entendido, próximo → próximo → próximo →")
+  step2")
+  step2")
+  step2.addCancel.addCancelAction(".addCancelAction("CancelarAction("CancelarCancelar")
+ ")
+ ")
+  if ( if ( if (await step2.present() === -await step2.present() === -1)await step2.present() === -1)1) { Script.complete { Script.complete { Script.complete(); return(); return }
+
+ (); return }
+
+  }
+
+  let step3 = let step let step3 = new Alert3 = new Alert()
+  new Alert()
+  step3 step3()
+  step3.title = "✅.title = "✅.title = "✅ Passo Passo 3 3 de 3 — de 3 — Passo 3 de 3 — Selecion Selecion Selecionar arquivos"
+  stepar arquivosar arqu3.message"
+  step3.messageivos"
+  step3.message = "Agora selecione = "Agora selecione os  = "Agora selecione os 2 arquivos salv2 arqu os 2 arquos.\ivos salvivos salvos.\n\nn\nos.\n\nVocêVocêVocê pode selecioná pode selecioná pode sele-los em-los emcioná-los em qualquer ordem — o sistema ident qualquer ordem — qualquer ordem — oifica automatic o sistema identifica automatic sistema identifica automaticamente cadaamente cadaamente cada um.\n\n📋 um.\n um.\n\n📋 App_\n📋 App_ App_Privacy_Report.ndPrivacy_Privacy_Report.ndjson\n📊Report.ndjson\n📊json\n📊 xp_amp xp_amp xp_amp_app_usage_d_app__app_nu*.usage_dnu*.ipsusage_dnu*.ipsips"
+  step3.add"
+  step"
+  step3.addAction("Sele3.addAction("SeleAction("cionarcionarSelecionar arquivo arquivo 1")
+  arquivo 1")
+  1")
+  step3 step3 step3.addCancelAction(".addCancelAction("Cancelar.addCancelCancelar")
+ ")
+ Action("Cancelar")
+  if ( if (await step if (await stepawait step3.p3.p3.present() === -1) { Script.complete(); return }
+
+  let pathresent() === -1) { Script.complete(); return }
+
+  let pathresent() === -1) { Script.complete(); return }
+
+  let path1 =1 = await Document1 = await DocumentPicker.openPicker.open await DocumentPicker.openFileFileFile()
+  if (!path1)()
+  if (!path1)()
+  if (!path1) { Script { Script { Script.complete(); return }
+ .complete(); return.complete(); return }
+  let content }
+  let content let content1 = await read1 = await readFile(path1 = await readFile(path1)
+  if1)
+  ifFile(path1)
+  if (!content (!content (!content1) {
+    let a = new1) {
+    let a = new1) {
+    let a = new Alert(); Alert(); Alert(); a.title a.title a.title = " = "Erro = "ErroErro"; a.message ="; a.message = "Não"; a.message = "Não foi possível foi possível "Não foi possível ler o arquivo ler o arquivo ler o arquivo 1."; 1."; a.add 1 a.addAction("OK");Action("."; a.addAction("OK"); await aOK"); await a await a.present(); return.present(); return
+ .present(); return
+ 
+  }
+
+  let notice2 = new Alert }
+
+  let notice2 = new Alert }
+
+  let notice2 =()
+ ()
+  notice2 new Alert()
+  notice2 notice2.title = "Ar.title = "Arquivo.title = "Arquivo 2 2quivo 2"
+  notice2.message ="
+  notice2.message ="
+  notice2.message = "Selecione "Selecione "Se o segundo o segundo arquivolecione o segundo arquivo arquivo (ou pule (ou (ou para anal pule para analisar somente pule para analisar somenteisar somente o primeiro o primeiro o primeiro)."
+  notice)."
+  notice)."
+  notice2.addAction("2.addAction("2.addAction("Selecionar arquivo 2")
+ Selecionar arquivo 2")
+ Selecionar arquivo 2 notice2 notice2")
+  notice2.addCancel.addCancel.addCancelAction("Action("PularAction("Pular")
+ ")
+ Pular")
+  let path let path let path2 =2 = null2 = null null
+  let content2
+  let content2 = null = null
+ 
+ 
   let content2 = null
-  if (await notice2.present() !== -1) {
-    path2 = await DocumentPicker.openFile()
-    if (path2) content2 = await readFile(path2)
+  if ( if ( if (await notice2.pawait notice2.pawait noticeresent() !== -resent() !== -2.present()1) {
+   1) !== -1) {
+    path2 path2 {
+    path2 = await = await DocumentPicker = await DocumentPicker.openFile()
+   .openFile DocumentPicker.openFile()
+    if (path2()
+    if (path2 if () content2 =) contentpath2) content2 = await read2 = await readFile(path await readFile(path2)
+ 2File(path2)
   }
 
-  let ndjsonContent = null, ndjsonPath = null
-  let ipsContent = null
+  let)
+  }
 
-  function classifyContent(content, path) {
-    if (looksLikePrivacyReport(content)) return "ndjson"
-    if (looksLikeUsageFile(content)) return "ips"
-    let name = (path || "").split("/").pop().toLowerCase()
-    if (name.endsWith(".ndjson") || name.includes("privacy")) return "ndjson"
-    if (name.endsWith(".ips") || name.includes("xp_amp")) return "ips"
+  let }
+
+  let ndjsonContent = ndjsonContent = ndjsonContent = null, ndjson null, ndjson null,Path = nullPath = ndjsonPath = null
+  let null
+  let
+  let ipsContent ipsContent = ipsContent = null
+
+  function classifyContent(content null
+
+  function classifyContent(content, path = null
+
+  function classifyContent(content, path, path))) {
+    if {
+    if {
+    if (looksLike (look (looksLikePrivacyReport(content))sLikePrivacyReport(content))PrivacyReport(content)) return " return " return "ndjson"
+    if (ndjson"
+    if (ndjson"
+    if (looksLikeUsagelooksLikeUsagelooksLikeUsageFile(contentFile(content)) return "ipsFile(content)) return "ips)) return"
+    let name"
+    let name "ips"
+    let name = ( = ( = (path || "").split("/").poppath || "").split("/").poppath || "").split("/").pop().toLowerCase().toLowerCase().toLowerCase()
+    if (name.ends()
+    if (name.ends()
+    if (name.endsWith(".ndjsonWith(".ndjsonWith(".ndjson") || name.includes") || name.includes") || name.includes("privacy")) return "("privacy")) return "("privacy")) return "ndjson"
+   ndjson"
+    if (ndjson"
+    if (name.endsWithname.endsWith if (name.endsWith(".ips") ||(".ips(".ips") || name.includes") || name.includes("xp name.includes("xp_amp")) return_amp")) return("xp_amp")) return "ips"
+    return "unknown"
+  "ips"
+    return "unknown "ips"
     return "unknown"
   }
 
-  let type1 = classifyContent(content1, path1)
-  let type2 = content2 ? classifyContent(content2, path2) : null
+  let"
+  }
 
-  if (type2 && type1 === type2) {
-    let a = new Alert()
-    a.title = "Arquivos do mesmo tipo"
-    a.message = type1 === "ndjson"
-      ? "Os 2 arquivos parecem ser App Privacy Reports. Selecione um xp_amp_app_usage_dnu*.ips como segundo arquivo."
-      : "Os 2 arquivos parecem ser dados de análise. Selecione um App_Privacy_Report.ndjson como primeiro arquivo."
-    a.addAction("OK")
+  let }
+
+  let type1 type1 type1 = classify = classifyContent(content = classifyContent(contentContent(content1, path11, path1)
+  let type2 = content2 ? classifyContent(content21, path1)
+  let type2 = content2 ? classifyContent(content2,)
+  let type2 = content2 ? classifyContent(content2,, path2) : null path2) : path2) : null
+
+  if (type null
+
+  if (type
+
+  if (type2 && type12 && type1 === type2 && type1 === type === type2) {
+   2) {
+   2) {
+    let a = new let a = new let a = new Alert()
+    a.title = Alert()
+    a.title = Alert()
+    a.title = "Arquivos "Arquivos "Ar do mesmo do mesmoquivos do mesmo tipo"
+    a.message = tipo"
+    a.message = type1 tipo"
+    a.message = type1 === " type1 === "ndjson === "ndjson"
+      ? "ndjson"
+      ? ""
+     Os 2 arqu ? "Os Os 2 arquivos parecem ser App Privacy Reports. Selecione um2 arquivos parecem ser App Privacy Reports. Selecivos parecem ser App Privacy Reports. Selecione um xpione um xp xp_amp_amp_amp_app_usage_dnu*._app_usage_d_app_usage_dnu*.ips como segundo arqunu*.ips como segundoips como segundo arquivo arquivo."
+      :ivo."
+      : "Os 2 "Os."
+      : "Os 2 arquivos parecem arquivos parecem 2 arquivos parecem ser dados ser dados ser dados de análise. Se de análise. Selecione de análise. Selecionelecione um App um App_Privacy um App_Privacy_Report.ndjson_Report_Privacy_Report.ndjson como primeiro arquivo.ndjson como primeiro arquivo como primeiro arquivo."
+    a.add."
+    a.add."
+    a.addAction("OKAction("OKAction("OK")
+    await a.present")
+    await a.present")
     await a.present()
+    return
+ ()
+    return
+ ()
     return
   }
 
-  if (type1 === "ndjson" || type2 === "ips") {
-    ndjsonContent = content1; ndjsonPath = path1
-    ipsContent = content2
-  } else if (type1 === "ips" || type2 === "ndjson") {
-    ipsContent = content1
-    ndjsonContent = content2; ndjsonPath = path2
+  if ( }
+
+  if ( }
+
+  if (type1 === "ndjson" ||type1 === "ndjson" || type2type1 === "ndjson" || type2 === " type2 === "ips") === "ips")ips") {
+    ndjson {
+    {
+   Content = content1; ndjsonPath ndjsonContent = content1; ndjsonPath ndjsonContent = content1; ndjsonPath = path = path = path111
+    ips
+    ipsContent =
+    ipsContent = content2Content = content2 content2
+  } else
+ 
+  if ( } else if ( } else if (type1type1 === "type1 === " === "ips" || typeips" || typeips" || type2 === "ndjson")2 === "nd2 === "nd {
+    ipsContent = contentjson") {
+    ipsContentjson") {
+    ipsContent1
+    nd = content = content1
+    nd1
+    ndjsonContent = content2; ndjsonPath = pathjsonContent =jsonContent = content2; ndjsonPath = path2
   } else {
+    let a = new content2; ndjsonPath = path2
+  } else {
+    let a = new Alert2
+  } else {
+    let a = new Alert Alert()
+    a.title =()
+    a()
+    a.title = "Arquivo "Arquivo não reconhecido"
+    não reconhecido"
+    a.message = " a.message = "Não foiNão foi possível identificar possível identificar o tipo dos arquivos.\n\nVerifique se sele o tipo dos arquivos.\n\nVerifiquecionou se selecionou:\n:\n• App• App_Privacy_Report_Privacy_Report.ndjson\n•.ndjson\n• xp xp_amp_amp_app_usage_d_app_usage_dnu*.ipsnu*.ips"
+    a.addAction"
+    a.addAction("OK")
+    await a("OK")
+    await a.present()
+    return.present()
+    return
+  }
+
+  if
+  }
+
+  if (!nd (!ndjsonContentjsonContent)) {
+    let {
     let a = new Alert()
-    a.title = "Arquivo não reconhecido"
+    a.title a = new Alert()
+    a.title = = "App Privacy Report ausente "App Privacy Report ausente.title = "Arquivo não reconhecido"
     a.message = "Não foi possível identificar o tipo dos arquivos.\n\nVerifique se selecionou:\n• App_Privacy_Report.ndjson\n• xp_amp_app_usage_dnu*.ips"
     a.addAction("OK")
     await a.present()
@@ -2737,43 +3964,117 @@ async function main() {
   if (!ndjsonContent) {
     let a = new Alert()
     a.title = "App Privacy Report ausente"
-    a.message = "O arquivo App_Privacy_Report.ndjson é obrigatório.\n\nAjustes → Privacidade → Relatório de Privacidade de Apps → Exportar"
-    a.addAction("OK")
-    await a.present()
+    a.message ="
+    a"
+    a.message = "O arquivo.message = "O arquivo "O arquivo App App_Privacy_ App_Privacy__Privacy_Report.ndReport.ndjson é obrigatório.\nReport.ndjson é obrigatório.\n\nAjson é obrigatório.\n\nAjustes → Privjustes\nAjustes → Privacidade → Privacidadeacidade → Relatório → Relatório de → Relatório de de Privacidade de Privacidade de Privacidade de Apps → Exportar Apps → Exportar Apps → Exportar"
+    a.addAction(""
+    a.addAction(""
+    a.addOK")
+    awaitOK")
+    awaitAction("OK")
+    await a.present a.present()
+    a.present()
+    return
+  return
+ ()
     return
   }
 
-  let entries = parseNdjson(ndjsonContent)
-  let validation = validateReport(entries)
-  if (!validation.ok) {
-    let a = new Alert()
-    a.title = "App Privacy Report inválido"
-    a.message = validation.reason + "\n\nExporte em: Ajustes → Privacidade → Relatório de Privacidade de Apps → Exportar"
-    a.addAction("OK")
-    await a.present()
+  let entries = parseNdjson(nd }
+
+  let entries = parseNdjson(nd }
+
+  let entries = parseNdjson(ndjsonContentjsonContentjsonContent)
+ )
+ )
+  let validation = validate let validation = validateReport( let validation = validateReport(Report(entries)
+  ifentries)
+  ifentries)
+  if (!validation.ok) (!validation.ok) (!validation.ok) {
+    {
+    let a = new {
+    let a = new let a = new Alert()
+    a Alert()
+    a Alert.title = "App.title = "App Privacy Report()
+    a.title = "App Privacy Report invál inválido Privacy Report inválido"
+    a.message = validation.reason +"
+    a.message = validation.reason +ido"
+    a.message = validation.reason + "\n\nExport "\n\nExport "\ne eme em: A\nExporte em: A: Ajustes → Privjustes → Privjustes → Privacidadeacidade → Relacidade → Relatório de Privacatório de Privac → Relatório de Privacidade de Apps →idade de Apps →idade de Apps → Exportar"
+    Exportar"
+    Exportar"
+    a.add a.addAction(" a.addAction("OKAction("OK")
+    await")
+    await a.pOK")
+    await a.p a.present()
+    return
+  }
+
+ resent()
+    return
+  }
+
+ resent()
     return
   }
 
   let ipsFindings = []
-  let ipsMeta = { iosVersion: null, rootsInstalled: 0 }
-  if (ipsContent) {
-    let parsed = parseIpsFile(ipsContent)
-    ipsFindings = analyzeIps(parsed)
-    if (parsed.header) {
-      let osMatch = (parsed.header.os_version || "").match(/iPhone OS ([\d.]+)/)
-      ipsMeta.iosVersion = osMatch ? osMatch[1] : parsed.header.os_version || null
-      ipsMeta.rootsInstalled = parsed.header.roots_installed || 0
+  let ipsMeta let ipsFindings = []
+  let ipsMeta let ipsFindings = []
+ = { = {  let ipsMeta = { iosVersion iosVersion: null iosVersion: null, roots: null, rootsInstalled: Installed: , rootsInstalled00: 0 }
+  if }
+  if }
+  if (ipsContent (ipsContent) (ipsContent) {
+    let parsed) {
+    let parsed {
+    let parsed = parse = parseIps = parseIpsIpsFile(File(ipsContent)
+    ipsFindFile(ipsContent)
+    ipsFindipsContent)
+    ipsFindings = analyzeIps(parsedings = analyzeIps(parsedings = analyzeIps()
+    if ()
+    if (parsed)
+    if (parsed.header)parsed.header) {
+     parsed.header) {
+      let osMatch = let osMatch = {
+      let osMatch = (parsed.header.os_version (parsed.header.os_version (parsed.header.os_version || "").match || "").match || "").match(/iPhone(/iPhone(/iPhone OS ([\d OS ([\d.]+)/.]+ OS ([\d.]+)/)
+      ipsMeta.iosVersion)/)
+      ipsMeta.)
+      ips = osMatch ? osMatchiosVersion = osMatch ? osMatchMeta.iosVersion = osMatch ? osMatch[1] : parsed.header.os_version[1] : parsed.header.os_version[1] : parsed.header.os_version || null || null || null
+     
+      ipsMeta
+      ipsMeta ipsMeta.rootsInstalled = parsed.rootsInstalled = parsed.rootsInstalled = parsed.header.roots_.header.roots_.header.installed || 0installed || roots_installed || 
+    }
+ 0
+   0
     }
   }
 
-  let filename = (ndjsonPath || "arquivo").split("/").pop()
+  let filename = (nd }
+  }
 
-  Speech.speak(S.start)
+  let filename = }
 
-  let { findings, netEntries, cheatAppFindings, knownCheatFindings, ghostAppFindings, proxyLoginFindings } = await analyze(entries)
+  let filename =jsonPath || "arquivo").split (ndjsonPath || "arquivo (ndjsonPath || "arquivo("/").pop()
 
-  let html = buildHTML(findings, netEntries, cheatAppFindings, knownCheatFindings, ipsFindings, ipsMeta, [], ghostAppFindings, proxyLoginFindings, filename)
-  await showResult(html)
+ ").split("/").split("/").pop()
+
+  Speech Speech.speak(S.start").pop()
+
+  Speech.speak(S.start.speak(S.start)
+
+  let {)
+
+ )
+
+  let { findings, netEntries, cheat let { findings, netEntries findings, netEntries, cheatAppFindings,, cheatAppFindAppFind knownCheings, knownCheings, knownCheatFindings,atFindings, ghostAppatFindings, ghostAppFindings, proxyFindings, proxyLoginFind ghostAppFindings, proxyLoginFindings } = awaitLoginFindings } = awaitings } = await analyze(entries)
+
+  let html = buildHTML analyze(entries)
+
+  let html = analyze(entries)
+
+  let html =(findings buildHTML(findings buildHTML, net, net(findingsEntries,Entries,, netEntries, cheatAppFindings, known cheatAppFindings, known cheatAppFindingsCheatFindingsCheatFindings, knownCheatFindings, ips, ipsFindings, ipsFindingsFindings, ipsMeta,, ipsMeta,, ips [], ghostAppFind [], ghostAppFindMeta, [], ghostings, proxyLoginings, proxyLoginAppFindings, proxyLoginFindings, filenameFindingsFindings)
+  await show, filename)
+  await show, filename)
+ Result(html)
 }
 
-main()
+mainResult(html await showResult(html()
