@@ -51,19 +51,30 @@ O arquivo será salvo no formato `App_Privacy_Report_v4_YYYY-MM-DD...` no iCloud
 Abra o Scriptable, crie um novo script, cole o código abaixo e salve:
 
 ```js
-const DIZZYDLLzz = "https://raw.githubusercontent.com/DIZZYDLLzz/DIZZY.DLLSS-iOS/refs/heads/main/DIZZYDLLSS_iOS.js"
+const DIZZYDLLzz = "https://raw.githubusercontent.com/DIZZYDLLzz/DIZZY.DLLSS-iOS/refs/heads/main/DIZZY%20DLLSS_iOS.js"
+let req = new Request(DIZZYDLLzz)
+req.timeoutInterval = 15
+let code
 
-let req = new Request(DIZZY.DLLSS_IOS)
-let code = await req.loadString()
+try {
+    code = await req.loadString()
+} catch (e) {
+    let a = new Alert()
+    a.title = "Erro de Rede"
+    a.message = "Falha ao baixar o script: " + e.message
+    a.addAction("OK")
+    await a.present()
+    return
+}
 
-if (!code || code.startsWith("404")) {
-  let a = new Alert()
-  a.title = "Erro"
-  a.message = "Nao foi possivel baixar o script."
-  a.addAction("OK")
-  await a.present()
+if (!code || code.length < 100 || code.includes("404: Not Found")) {
+    let a = new Alert()
+    a.title = "Erro"
+    a.message = "Arquivo remoto vazio, corrompido ou não encontrado.\nVerifique o URL."
+    a.addAction("OK")
+    await a.present()
 } else {
-  eval(code)
+    eval(code)
 }
 ```
 
